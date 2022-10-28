@@ -1,0 +1,29 @@
+{
+    "name": "notabenedev/site-staff",
+    "description": "Add staff to site",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "N.Borisova",
+            "email": "n.borisova@me.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "portedcheese/base-settings": "@dev",
+        "portedcheese/seo-integration": "@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "notabenedev\\SiteStaff\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Notabenedev\\SiteStaff\\StaffServiceProvider"
+            ]
+        }
+    }
+}
