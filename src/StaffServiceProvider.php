@@ -31,6 +31,6 @@ class StaffServiceProvider extends ServiceProvider
         ], 'config');
 
         // Подключение миграции
-        $this->loadJsonTranslationsFrom(__DIR__.'/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
     }
 }
