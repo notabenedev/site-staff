@@ -14,7 +14,7 @@ class StaffServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'config/site-staff.php', 'site-staff'
+            __DIR__.'/config/site-staff.php', 'site-staff'
         );
     }
 
@@ -27,7 +27,7 @@ class StaffServiceProvider extends ServiceProvider
     {
         // Публикация конфигурации
         $this->publishes([
-            __DIR__.'config/site-staff.php' => config_path('site-staff.php')
+            __DIR__.'/config/site-staff.php' => config_path('site-staff.php')
         ], 'config');
 
         // Подключение миграции
