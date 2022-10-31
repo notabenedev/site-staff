@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "notabenedev\\SiteStaff\\": "src/"
+            "Notabenedev\\SiteStaff\\": "src/"
         }
     },
     "extra": {

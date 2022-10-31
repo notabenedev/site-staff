@@ -1,6 +1,11 @@
 <?php
 return [
     "sitePackageName" => "Специалисты",
-    "siteDepartmentName" => "Структура",
-    "siteStaffName" => "Специалисты",
+    "siteDepartmentName" => "Отделы",
+    "siteEmployeeName" => "Сотрудники",
+
+    "departmentNest" => 4,
+    "staffUrlName" => "staff",
+    "departmentUrlName" => "department",
+    "employeeUrlName" => "employee",
 ];
