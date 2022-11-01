@@ -3,6 +3,7 @@
 namespace Notabenedev\SiteStaff;
 
 use Illuminate\Support\ServiceProvider;
+use Notabenedev\SiteStaff\Console\Commands\StaffMakeCommand;
 
 class StaffServiceProvider extends ServiceProvider
 {
@@ -32,5 +33,12 @@ class StaffServiceProvider extends ServiceProvider
 
         // Подключение миграции
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+
+        // Console
+        if ($this->app->runningInConsole()){
+            $this->commands([
+                StaffMakeCommand::class,
+            ]);
+        }
     }
 }
