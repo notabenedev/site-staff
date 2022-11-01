@@ -40,5 +40,10 @@ class StaffServiceProvider extends ServiceProvider
                 StaffMakeCommand::class,
             ]);
         }
+
+        //Подключаем роуты
+        if (config("site-staff.staffAdminRoutes")) {
+            $this->loadRoutesFrom(__DIR__."/routes/admin/department.php");
+        }
     }
 }

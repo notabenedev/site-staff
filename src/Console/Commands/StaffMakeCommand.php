@@ -15,6 +15,9 @@ class StaffMakeCommand extends BaseConfigModelCommand
     protected $signature = 'make:staff
     {--all : Run all}
     {--models : Export models}
+    {--controllers : Export controllers}
+    {--policies : Export and create rules} 
+    {--only-default : Create only default rules}
     ';
 
 
@@ -45,6 +48,25 @@ class StaffMakeCommand extends BaseConfigModelCommand
      */
     protected $models = ["StaffDepartment"];
 
+    /**
+     * Make Controllers
+     */
+    protected $controllers = [
+        "Admin" => ["StaffDepartmentController"],
+    ];
+
+    /**
+     * Policies
+     * @var array
+     *
+     */
+    protected $ruleRules = [
+        [
+            "title" => "Отделы",
+            "slug" => "departments",
+            "policy" => "StaffDepartmentPolicy",
+        ],
+    ];
 
     /**
      * Create a new command instance.
@@ -67,6 +89,14 @@ class StaffMakeCommand extends BaseConfigModelCommand
 
         if ($this->option("models") || $all) {
             $this->exportModels();
+        }
+
+        if ($this->option("controllers") || $all) {
+            $this->exportControllers("Admin");
+        }
+
+        if ($this->option("policies") || $all) {
+            $this->makeRules();
         }
 
         return 0;
