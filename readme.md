@@ -7,3 +7,5 @@
     php artisan make:staff
                             {--all : Run all}
                             {--models : Export models}
+                            {--controllers : Export models}
+                            {--policies : Export models}
