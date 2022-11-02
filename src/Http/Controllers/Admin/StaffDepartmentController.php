@@ -211,4 +211,29 @@ class StaffDepartmentController extends Controller
             'department' => $department,
         ]);
     }
+
+    /**
+     * Publish group
+     *
+     * @param StaffDepartment $department
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     */
+
+    public function publish(StaffDepartment $department)
+    {
+        $this->authorize("update", $department);
+
+        if ($department->publishCascade())
+            return
+                redirect()
+                ->back()
+                ->with("success", "Успешно изменено");
+        else
+            return
+            redirect()
+                ->back()
+                ->with("danger",  "Статус не может быть изменен");
+    }
 }

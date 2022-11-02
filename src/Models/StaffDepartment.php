@@ -89,45 +89,49 @@ class StaffDepartment extends Model
 
     public function publishCascade()
     {
-
         $published =  $this->published_at;
         $children = $this->children();
         $collection = $children->get();
         $parentPublished = $this->isParentPublished();
 
-        // for parents
-        if ($collection->count() > 0) {
+        //published department and child
 
-            //unpublished department and child
-            if ($published || !$parentPublished) {
-                $this->published_at = null;
-                $this->save();
-
-                foreach ($collection as $child) {
-                    $child->published_at = null;
-                    $child->save();
-                }
-
-            } else {
-                //publish department
-                $this->publish();
-            }
-            return
-                redirect()
-                    ->back();
-
-        }
-        // for leaf departments
-        else {
-            //can't publish the leaf when parent is unpublished
-            if (!$published  && !$parentPublished) {
-                return redirect()
-                    ->back();
-            }
+        if ($parentPublished){
+            // change publish
             $this->publish();
+            if($published){
+                $this->unPublishChildren($collection);
+            }
+            return true;
+        }
+        else
+        {
+            if (!$published){
+                return false;
+            }
+            else {
+                $this->publish();
+                $this->unPublishChildren($collection);
+                return true;
+            }
+        }
 
-            return redirect()
-                ->back();
+    }
+
+    /**
+     * UnPublish child
+     *
+     * @param $collection
+     * @return void
+     *
+     */
+    protected function unPublishChildren($collection){
+        if ($collection->count() > 0) {
+            foreach ($collection as $child) {
+                $child->published_at = null;
+                $child->save();
+                $this->unPublishChildren($child->children()->get());
+            }
         }
     }
 
