@@ -19,6 +19,7 @@ class StaffMakeCommand extends BaseConfigModelCommand
     {--controllers : Export controllers}
     {--policies : Export and create rules} 
     {--only-default : Create only default rules}
+    {--vue : Export vue}
     ';
 
 
@@ -77,6 +78,24 @@ class StaffMakeCommand extends BaseConfigModelCommand
     ];
 
     /**
+     * Vue files folder
+     *
+     * @var string
+     */
+    protected $vueFolder = "site-staff";
+
+    /**
+     * Vue files list
+     *
+     * @var array
+     */
+    protected $vueIncludes = [
+        'admin' => [ 'admin-department-list' => "DepartmentListComponent",
+        ],
+        'app' => [],
+    ];
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -109,6 +128,10 @@ class StaffMakeCommand extends BaseConfigModelCommand
 
         if ($this->option("policies") || $all) {
             $this->makeRules();
+        }
+
+        if ($this->option("vue") || $all) {
+            $this->makeVueIncludes("admin");
         }
 
         return 0;

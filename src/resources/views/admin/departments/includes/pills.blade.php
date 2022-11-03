@@ -13,12 +13,12 @@
                         </a>
                     </li>
 
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="{{ route('admin.departments.index') }}?view=tree"--}}
-{{--                           class="nav-link{{ isset($isTree) && $isTree ? " active" : "" }}">--}}
-{{--                            Приоритет--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{ route('admin.departments.index') }}?view=tree"
+                           class="nav-link{{ isset($isTree) && $isTree ? " active" : "" }}">
+                            Приоритет
+                        </a>
+                    </li>
                 @endcan
 
                 @empty($department)

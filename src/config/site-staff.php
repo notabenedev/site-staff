@@ -5,6 +5,7 @@ return [
     "siteEmployeeName" => "Сотрудники",
 
     "staffAdminRoutes" => true,
+    "staffSiteRoutes" => true,
 
     "departmentNest" => 4,
     "staffUrlName" => "staff",

@@ -1,8 +1,8 @@
 @can("update", \App\StaffDepartment::class)
-    <admin-group-list :structure="{{ json_encode($departments) }}"
+    <admin-department-list :structure="{{ json_encode($departments) }}"
                          :nesting="{{ config("site-staff.departmentNest") }}"
                          :update-url="'{{ route("admin.departments.item-priority") }}'">
-    </admin-group-list>
+    </admin-department-list>
 @else
     <ul>
         @foreach ($departments as $department)

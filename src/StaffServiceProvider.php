@@ -7,6 +7,8 @@ use Illuminate\Support\ServiceProvider;
 use Notabenedev\SiteStaff\Console\Commands\StaffMakeCommand;
 use App\StaffDepartment;
 use App\Observers\Vendor\SiteStaff\StaffDepartmentObserver;
+use Notabenedev\SiteStaff\Events\StaffDepartmentChangePosition;
+use Notabenedev\SiteStaff\Listeners\DepartmentIdsInfoClearCache;
 
 class StaffServiceProvider extends ServiceProvider
 {
@@ -51,6 +53,9 @@ class StaffServiceProvider extends ServiceProvider
         if (config("site-staff.staffAdminRoutes")) {
             $this->loadRoutesFrom(__DIR__."/routes/admin/department.php");
         }
+        if (config("site-staff.staffSiteRoutes")) {
+            $this->loadRoutesFrom(__DIR__."/routes/site/department.php");
+        }
 
         // Подключение шаблонов.
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'site-staff');
@@ -60,8 +65,16 @@ class StaffServiceProvider extends ServiceProvider
         $seo["departments"] = StaffDepartment::class;
         app()->config["seo-integration.models"] = $seo;
 
+        // Events
+        $this->addEvents();
+
         // Наблюдатели.
         $this->addObservers();
+
+        // Assets.
+        $this->publishes([
+            __DIR__ . '/resources/js/components' => resource_path('js/components/vendor/site-staff'),
+        ], 'public');
     }
 
     /**
@@ -83,5 +96,15 @@ class StaffServiceProvider extends ServiceProvider
         if (class_exists(StaffDepartmentObserver::class) && class_exists(StaffDepartment::class)) {
             StaffDepartment::observe(StaffDepartmentObserver::class);
         }
+    }
+
+    /**
+     * Подключение Events.
+     */
+
+    protected function addEvents()
+    {
+        // Изменение позиции группы.
+        $this->app["events"]->listen(StaffDepartmentChangePosition::class, DepartmentIdsInfoClearCache::class);
     }
 }

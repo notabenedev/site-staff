@@ -3,6 +3,7 @@
 namespace Notabenedev\SiteStaff\Observers;
 
 use App\StaffDepartment;
+use Notabenedev\SiteStaff\Events\StaffDepartmentChangePosition;
 use PortedCheese\BaseSettings\Exceptions\PreventActionException;
 use PortedCheese\BaseSettings\Exceptions\PreventDeleteException;
 
@@ -30,6 +31,16 @@ class StaffDepartmentObserver
 
     }
 
+    /**
+     * После создания.
+     *
+     * @param StaffDepartment $department
+     */
+    public function created(StaffDepartment $department)
+    {
+        event(new StaffDepartmentChangePosition($department));
+    }
+
 
 
     /**
@@ -39,18 +50,28 @@ class StaffDepartmentObserver
      */
     public function updating(StaffDepartment $department)
     {
+        $original = $department->getOriginal();
+        if (isset($original["parent_id"]) && $original["parent_id"] !== $department->parent_id) {
 
-
+            if ((! $department->parent->published_at) && $department->published_at) {
+                  $department->publishCascade();
+                 // throw new PreventActionException("Невозможно изменить Отдел, родитель не опубликован");
+            }
+            $this->departmentChangedParent($department, $original["parent_id"]);
+        }
     }
 
     /**
-     * После создания.
+     * После обновления.
      *
      * @param StaffDepartment $department
      */
     public function updated(StaffDepartment $department)
     {
-
+        if (isset($department->parent))
+            $this->departmentChangedParent($department, $department->parent->id);
+        else
+            $this->departmentChangedParent($department, "");
     }
 
     /**
@@ -76,7 +97,11 @@ class StaffDepartmentObserver
      */
     protected function departmentChangedParent(StaffDepartment $department, $parent)
     {
-
+        if (! empty($parent)) {
+            $parent = StaffDepartment::find($parent);
+            event(new StaffDepartmentChangePosition($parent));
+        }
+        event(new StaffDepartmentChangePosition($department));
     }
 
 }

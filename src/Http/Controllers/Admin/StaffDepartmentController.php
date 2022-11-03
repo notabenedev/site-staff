@@ -236,4 +236,30 @@ class StaffDepartmentController extends Controller
                 ->back()
                 ->with("danger",  "Статус не может быть изменен");
     }
+
+    /**
+     * Изменить приоритет
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changeItemsPriority(Request $request)
+    {
+        $data = $request->get("items", false);
+        if ($data) {
+            $result = StaffDepartmentActions::saveOrder($data);
+            if ($result) {
+                return response()
+                    ->json("Порядок сохранен");
+            }
+            else {
+                return response()
+                    ->json("Ошибка, что то пошло не так");
+            }
+        }
+        else {
+            return response()
+                ->json("Ошибка, недостаточно данных");
+        }
+    }
 }

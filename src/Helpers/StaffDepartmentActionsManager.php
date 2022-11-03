@@ -28,8 +28,8 @@ class StaffDepartmentActionsManager
     /**
      * Получить дерево категорий.
      *
-     * @param bool $forJs
      * @return array
+     *
      */
     public function getTree()
     {
@@ -72,12 +72,12 @@ class StaffDepartmentActionsManager
             }
             $parentId = ! empty($parent) ? $parent : null;
             // Обновление Категории.
-            $group = StaffDepartment::query()
+            $department = StaffDepartment::query()
                 ->where("id", $id)
                 ->first();
-            $group->priority = $priority;
-            $group->parent_id = $parentId;
-            $group->save();
+            $department->priority = $priority;
+            $department->parent_id = $parentId;
+            $department->save();
         }
     }
 
@@ -246,12 +246,12 @@ class StaffDepartmentActionsManager
      *
      * @param StaffDepartment $department
      */
-    public function forgetGroupChildrenIdsCache(StaffDepartment $department)
+    public function forgetDepartmentChildrenIdsCache(StaffDepartment $department)
     {
-        Cache::forget("group-actions-getGroupChildren:{$department->id}");
+        Cache::forget("department-actions-getDepartmentChildren:{$department->id}");
         $parent = $department->parent;
         if (! empty($parent)) {
-            $this->forgetGroupChildrenIdsCache($parent);
+            $this->forgetDepartmentChildrenIdsCache($parent);
         }
     }
 
@@ -301,9 +301,10 @@ class StaffDepartmentActionsManager
      * Get root departments
      *
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     *
      */
 
-    public function getRootGroups(){
+    public function getRootDepartments(){
 
         $rootDepartments = StaffDepartment::query()
             ->whereNull("parent_id")
