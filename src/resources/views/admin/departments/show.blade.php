@@ -20,6 +20,10 @@
                         <dt class="col-sm-3">Адрес</dt>
                         <dd class="col-sm-9">{{ $department->slug }}</dd>
                     @endif
+                    @if ($department->description)
+                        <dt class="col-sm-3">Описание</dt>
+                        <dd class="col-sm-9">{!! $department->description !!}</dd>
+                    @endif
 
                     @if ($department->parent)
                         <dt class="col-sm-3">Родитель</dt>

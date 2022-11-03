@@ -16,6 +16,7 @@ class StaffDepartment extends Model
         "title",
         "slug",
         "short",
+        "description",
     ];
 
     protected $metaKey = "departments";

@@ -4,6 +4,8 @@ return [
     "siteDepartmentName" => "Отделы",
     "siteEmployeeName" => "Сотрудники",
 
+    "siteBreadcrumb" => true,
+
     "staffAdminRoutes" => true,
     "staffSiteRoutes" => true,
 
