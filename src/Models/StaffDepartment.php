@@ -27,6 +27,17 @@ class StaffDepartment extends Model
     }
 
     /**
+     * Сотрудники отдела.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function employees()
+    {
+        return $this->belongsToMany(\App\StaffEmployee::class)
+            ->withTimestamps();
+    }
+
+    /**
      * Родительская группа.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -48,7 +48,7 @@ class StaffMakeCommand extends BaseConfigModelCommand
      * The models to  be exported
      * @var array
      */
-    protected $models = ["StaffDepartment"];
+    protected $models = ["StaffDepartment", "StaffEmployee"];
 
     /**
      * Создание наблюдателей
