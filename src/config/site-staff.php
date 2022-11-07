@@ -14,6 +14,11 @@ return [
     "departmentUrlName" => "department",
     "employeeUrlName" => "employee",
 
+    "employeeTitleName" => "ФИО",
+    "employeeShortName" => "Специализация",
+    "employeeDescriptionName" => "Описание",
+    "employeeCommentName" => "Дополнительная информация",
+
     "departmentFacade" => \Notabenedev\SiteStaff\Helpers\StaffDepartmentActionsManager::class,
 
 ];

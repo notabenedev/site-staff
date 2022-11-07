@@ -10,5 +10,6 @@
                             {--controllers : Export models}
                             {--observers : Export observers}
                             {--policies : Export models}
+                            {--menu : Create admin menu}
                             {--vue : Export Vue components}
     npm run dev

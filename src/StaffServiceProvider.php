@@ -2,6 +2,7 @@
 
 namespace Notabenedev\SiteStaff;
 
+use App\StaffEmployee;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\ServiceProvider;
 use Notabenedev\SiteStaff\Console\Commands\StaffMakeCommand;
@@ -52,6 +53,7 @@ class StaffServiceProvider extends ServiceProvider
         //Подключаем роуты
         if (config("site-staff.staffAdminRoutes")) {
             $this->loadRoutesFrom(__DIR__."/routes/admin/department.php");
+            $this->loadRoutesFrom(__DIR__."/routes/admin/employee.php");
         }
         if (config("site-staff.staffSiteRoutes")) {
             $this->loadRoutesFrom(__DIR__."/routes/site/department.php");
@@ -60,9 +62,30 @@ class StaffServiceProvider extends ServiceProvider
         // Подключение шаблонов.
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'site-staff');
 
+        view()->composer([
+            "site-staff::admin.employees.create",
+            "site-staff::admin.employees.edit",
+
+        ], function ($view){
+            $departments = StaffDepartment::getTree();
+            $view->with("departments", $departments);
+        });
+
+        // Подключаем изображения.
+        $imagecache = app()->config['imagecache.paths'];
+        $imagecache[] = 'storage/employees/main';
+        $imagecache[] = 'storage/gallery/employees';
+        app()->config['imagecache.paths'] = $imagecache;
+
+        // Подключаем галерею.
+        $gallery = app()->config["gallery.models"];
+        $gallery["employee"] = StaffEmployee::class;
+        app()->config["gallery.models"] = $gallery;
+
         // Подключение метатегов.
         $seo = app()->config["seo-integration.models"];
         $seo["departments"] = StaffDepartment::class;
+        $seo["employees"] = StaffEmployee::class;
         app()->config["seo-integration.models"] = $seo;
 
         // Events

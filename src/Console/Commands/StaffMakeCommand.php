@@ -2,6 +2,8 @@
 
 namespace Notabenedev\SiteStaff\Console\Commands;
 
+use App\Menu;
+use App\MenuItem;
 use PortedCheese\BaseSettings\Console\Commands\BaseConfigModelCommand;
 
 
@@ -19,6 +21,7 @@ class StaffMakeCommand extends BaseConfigModelCommand
     {--controllers : Export controllers}
     {--policies : Export and create rules} 
     {--only-default : Create only default rules}
+    {--menu : Create admin menu}
     {--vue : Export vue}
     ';
 
@@ -61,7 +64,7 @@ class StaffMakeCommand extends BaseConfigModelCommand
      * Make Controllers
      */
     protected $controllers = [
-        "Admin" => ["StaffDepartmentController"],
+        "Admin" => ["StaffDepartmentController", "StaffEmployeeController"],
     ];
 
     /**
@@ -74,6 +77,11 @@ class StaffMakeCommand extends BaseConfigModelCommand
             "title" => "Отделы",
             "slug" => "departments",
             "policy" => "StaffDepartmentPolicy",
+        ],
+        [
+            "title" => "Сотрудники",
+            "slug" => "employees",
+            "policy" => "StaffEmployeePolicy",
         ],
     ];
 
@@ -130,10 +138,48 @@ class StaffMakeCommand extends BaseConfigModelCommand
             $this->makeRules();
         }
 
+        if ($this->option("menu") || $all) {
+            $this->makeMenu();
+        }
+
         if ($this->option("vue") || $all) {
             $this->makeVueIncludes("admin");
         }
 
         return 0;
+    }
+
+    protected function makeMenu()
+    {
+        try {
+            $menu = Menu::query()
+                ->where('key', 'admin')
+                ->firstOrFail();
+        }
+        catch (\Exception $e) {
+            return;
+        }
+
+        $title = config("site-staff.sitePackageName");
+        $itemData = [
+            'title' => $title,
+            'template' => "site-staff::admin.employees.menu",
+            'url' => "#",
+            'ico' => 'far fa-newspaper',
+            'menu_id' => $menu->id,
+        ];
+
+        try {
+            $menuItem = MenuItem::query()
+                ->where("menu_id", $menu->id)
+                ->where('title', $title)
+                ->firstOrFail();
+            $menuItem->update($itemData);
+            $this->info("Элемент меню '$title' обновлен");
+        }
+        catch (\Exception $e) {
+            MenuItem::create($itemData);
+            $this->info("Элемент меню '$title' создан");
+        }
     }
 }

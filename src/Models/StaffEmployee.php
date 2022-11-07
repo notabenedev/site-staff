@@ -4,6 +4,8 @@ namespace Notabenedev\SiteStaff\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use PortedCheese\BaseSettings\Traits\ShouldGallery;
 use PortedCheese\BaseSettings\Traits\ShouldImage;
 use PortedCheese\BaseSettings\Traits\ShouldSlug;
@@ -29,6 +31,21 @@ class StaffEmployee extends Model
 
         parent::booting();
 
+        static::creating(function (\App\StaffEmployee $model) {
+            $model->published_at = now();
+        });
+
+        static::updated(function (\App\StaffEmployee $model) {
+            // Забыть кэш.
+            $model->forgetCache();
+        });
+
+        static::deleting(function (\App\StaffEmployee $model) {
+            // Забыть кэш.
+            $model->forgetCache();
+
+            $model->departments()->sync([]);
+        });
     }
 
     /**
@@ -42,6 +59,35 @@ class StaffEmployee extends Model
             ->withTimestamps();
     }
 
+    /**
+     * Есть ли отдел у сотрудника
+     *
+     * @param $id
+     * @return mixed
+     */
+
+    public function hasDepartment($id)
+    {
+        return $this->departments->where('id',$id)->count();
+    }
+
+    /**
+     * Обновить секции новости.
+     *
+     * @param $userInput
+     */
+    public function updateDepartments($userInput, $new = false)
+    {
+        $departmentIds = [];
+        foreach ($userInput as $key => $value) {
+            if (strstr($key, "check-") == false) {
+                continue;
+            }
+            $departmentIds[] = $value;
+        }
+        $this->departments()->sync($departmentIds);
+        $this->forgetCache();
+    }
 
     /**
      * Change publish status
@@ -74,4 +120,61 @@ class StaffEmployee extends Model
     {
         return datehelper()->changeTz($value);
     }
+
+    /**
+     * Получить тизер
+     *
+     * @return string
+     * @throws \Throwable
+     */
+    public function getTeaser($grid = 3)
+    {
+        $key = "staff-employee-teaser:{$this->id}-{$grid}";
+        $model = $this;
+        $employee = Cache::rememberForever($key, function () use ($model) {
+            $image = $model->image;
+            return $model;
+        });
+        $view = view("site-staff::site.employees.teaser", [
+            'employee' => $employee,
+            'grid' => $grid,
+        ]);
+        return $view->render();
+    }
+
+    /**
+     * Получить галлерею.
+     * @return object
+     */
+    public function getFullData()
+    {
+        $cacheKey = "staff-employee-full:{$this->id}";
+        $cached = Cache::get($cacheKey);
+        if (!empty($cached)) {
+            return $cached;
+        }
+        $gallery = $this->images->sortBy('weight');
+        $image = $this->image;
+        $departments = $this->departments;
+        $data = (object) [
+            'gallery' => $gallery,
+            'image' => $image,
+            "departments" => $departments,
+        ];
+        Cache::forever($cacheKey, $data);
+        return $data;
+    }
+
+    /**
+     * Очистить кэш.
+     */
+    public function forgetCache($full = FALSE)
+    {
+        if (!$full) {
+            Cache::forget("staff-employee-teaser:{$this->id}-3");
+            Cache::forget("staff-employee-teaser:{$this->id}-6");
+        }
+        Cache::forget("staff-employee-full:{$this->id}");
+    }
+
 }
