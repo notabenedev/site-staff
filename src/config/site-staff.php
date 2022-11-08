@@ -18,6 +18,7 @@ return [
     "employeeShortName" => "Специализация",
     "employeeDescriptionName" => "Описание",
     "employeeCommentName" => "Дополнительная информация",
+    "employeeGalleryName" => "Сертификаты",
 
     "departmentFacade" => \Notabenedev\SiteStaff\Helpers\StaffDepartmentActionsManager::class,
 

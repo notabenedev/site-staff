@@ -38,7 +38,7 @@
                         <li class="nav-item">
                             <a class="nav-link{{ $currentRoute == 'admin.employees.show.gallery' ? ' active' : '' }}"
                                href="{{ route('admin.employees.show.gallery', ['employee' => $employee]) }}">
-                                Галерея
+                                {{ config("site-staff.employeeGalleryName") }}
                             </a>
                         </li>
                         @can("viewAny", \App\Meta::class)

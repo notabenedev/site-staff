@@ -12,6 +12,10 @@ Route::group([
         "prefix" => config("site-staff.departmentUrlName"),
         "as" => "departments.",
     ],function (){
+        //employees tree
+        Route::get("{department}/employees-tree", [StaffDepartmentController::class, "employeesTree"])
+            ->name("employees-tree");
+
         Route::get("/", [StaffDepartmentController::class, "index"])->name("index");
         Route::get("/create", [StaffDepartmentController::class, "create"])->name("create");
         Route::post("", [StaffDepartmentController::class, "store"])->name("store");

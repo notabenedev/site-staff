@@ -49,9 +49,13 @@
                                 @if ($department->nesting < config("site-staff.departmentNest"))
                                     <a class="dropdown-item"
                                        href="{{ route('admin.departments.create-child', ['department' => $department]) }}">
-                                        Вложенный
+                                        Дочернюю
                                     </a>
                                 @endif
+                                <a class="dropdown-item"
+                                   href="{{ route('admin.employees.create') }}">
+                                    Сотрудника
+                                </a>
                             </div>
                         </li>
                     @endcan
@@ -74,6 +78,16 @@
                         </li>
                     @endcan
 
+
+                    @can("update", \App\Employee::class)
+                        <li class="nav-item">
+                            <a href="{{ route("admin.departments.employees-tree", ["department" => $department]) }}"
+                               class="nav-link{{ strstr($currentRoute, "employees-tree") !== false ? " active" : "" }}">
+                               {{ config("site-staff.siteEmployeeName") }} - Приоритет
+                            </a>
+                        </li>
+                    @endcan
+
                     @can("viewAny", \App\Meta::class)
                         <li class="nav-item">
                             <a href="{{ route("admin.departments.metas", ["department" => $department]) }}"
@@ -82,15 +96,6 @@
                             </a>
                         </li>
                     @endcan
-
-{{--                    @can("viewAny", \App\Employee::class)--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="{{ route("admin.departments.employees.index", ["department" => $department]) }}"--}}
-{{--                               class="nav-link{{ strstr($currentRoute, "employees.") !== false ? " active" : "" }}">--}}
-{{--                                {{ config("site-staff.siteEmployeeName") }}--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endcan--}}
 
                     @can("delete", $department)
                         <li class="nav-item">

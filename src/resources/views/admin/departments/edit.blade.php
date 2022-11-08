@@ -1,8 +1,9 @@
 @extends("admin.layout")
 
-@section("page-title", "{$department->title} - ")
+@section("page-title", "{$department->title} - ".config("site-staff.siteDepartmentName"))
 
-@section('header-title', "{$department->title}")
+@section('header-title',  config("site-staff.siteDepartmentName")." - {$department->title}")
+
 
 @section('admin')
     @include("site-staff::admin.departments.includes.pills")

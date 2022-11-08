@@ -1,8 +1,8 @@
 @extends("admin.layout")
 
-@section("page-title", "{$department->title} - ")
+@section("page-title", "{$department->title} - ". config("site-staff.siteDepartmentName"))
 
-@section('header-title', "{$department->title}")
+@section('header-title',  config("site-staff.siteDepartmentName")." - {$department->title}")
 
 @section('admin')
     @include("site-staff::admin.departments.includes.pills")
@@ -38,19 +38,26 @@
                         <dd class="col-sm-9">{{ $childrenCount }}</dd>
                     @endif
                 </dl>
+                @if ($childrenCount)
+                    <h6>Дочерние:</h6>
+                    @include("site-staff::admin.departments.includes.table-list", ["departments" => $children])
+                @endif
             </div>
         </div>
     </div>
-    @if ($childrenCount)
+
+    @if (count($department->employees))
         <div class="col-12 mt-3">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Вложенные</h5>
+                    <h5>{{ config("site-staff.siteEmployeeName") }}</h5>
+                    <a href="{{ route("admin.departments.employees-tree", ["department" => $department]) }}">{{ config("site-staff.siteEmployeeName") }} - Приоритет</a>
                 </div>
-                <div class="card-body">
-                    @include("site-staff::admin.departments.includes.table-list", ["departments" => $children])
-                </div>
+                @include("site-staff::admin.employees.includes.table-list", ["employeesList" => $department->employees])
             </div>
         </div>
     @endif
+
+
+
 @endsection

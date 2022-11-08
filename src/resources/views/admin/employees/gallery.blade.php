@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
-@section('page-title', 'Галлерея - ')
-@section('header-title', "Галлерея {$employee->title}")
+@section('page-title', config("site-staff.employeeGalleryName").' - ')
+@section('header-title', config("site-staff.employeeGalleryName")." {$employee->title}")
 
 @section('admin')
     @include("site-staff::admin.employees.pills")

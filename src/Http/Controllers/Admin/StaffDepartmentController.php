@@ -5,6 +5,7 @@ namespace Notabenedev\SiteStaff\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Meta;
 use App\StaffDepartment;
+use App\StaffEmployee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Notabenedev\SiteStaff\Facades\StaffDepartmentActions;
@@ -112,10 +113,21 @@ class StaffDepartmentController extends Controller
         else {
             $children = false;
         }
+        // employees tree
+        $collection = $department->employees()->orderBy("priority")->get();
+        $groups = [];
+        foreach ($collection as $item) {
+            $groups[] = [
+                "name" => $item->title,
+                "id" => $item->id,
+            ];
+        }
+
         return view("site-staff::admin.departments.show", [
             "department" => $department,
             "childrenCount" => $childrenCount,
-            "children" => $children
+            "children" => $children,
+            "groups" => $groups
         ] );
     }
 
@@ -261,5 +273,22 @@ class StaffDepartmentController extends Controller
             return response()
                 ->json("Ошибка, недостаточно данных");
         }
+    }
+
+    public function employeesTree(StaffDepartment $department){
+        $this->authorize("update", StaffEmployee::class);
+        $collection = $department->employees()->orderBy("priority")->get();
+        $groups = [];
+        foreach ($collection as $item) {
+            $groups[] = [
+                "name" => $item->title,
+                "id" => $item->id,
+            ];
+        }
+        return view("site-staff::admin.departments.employees-tree", [
+            'department' => $department,
+            'groups' => $groups,
+        ]);
+
     }
 }

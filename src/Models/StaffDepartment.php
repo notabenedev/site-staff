@@ -33,7 +33,7 @@ class StaffDepartment extends Model
      */
     public function employees()
     {
-        return $this->belongsToMany(\App\StaffEmployee::class)
+        return $this->belongsToMany(\App\StaffEmployee::class)->orderBy("priority")
             ->withTimestamps();
     }
 

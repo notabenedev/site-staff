@@ -73,7 +73,7 @@
             </div>
             <div class="card-body">
                 @foreach ($employee->departments as $department)
-                    <span class="badge badge-pill badge-secondary">{{ $department->title }}</span>
+                    <a href="{{ route("admin.departments.show", ["department" => $department]) }}" class="badge badge-pill badge-secondary">{{ $department->title }}</a>
                 @endforeach
             </div>
         </div>
