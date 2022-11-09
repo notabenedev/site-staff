@@ -67,6 +67,7 @@ class StaffEmployeeController extends Controller
         $employee = StaffEmployee::create($request->all());
         $employee->uploadImage($request, "employees/main");
         $employee->updateDepartments($request->all(), true);
+        $employee->publishIfPublicDepartment();
         return redirect()
             ->route("admin.employees.show", ['employee' => $employee])
             ->with('success', 'Успешно создано');
@@ -228,12 +229,20 @@ class StaffEmployeeController extends Controller
      */
     public function publish(StaffEmployee $employee)
     {
-        $employee->published_at = $employee->published_at ? null : now();
-        $employee->save();
-
+        if (! $employee->published_at){
+            if (! $employee->publishIfPublicDepartment())
+                return redirect()
+                    ->back()
+                    ->with('danger',"Статус публикации не может быть изменен! Хотя бы один родитель должен быть опубликован.");
+        }
+        else{
+            $employee->published_at =  null;
+            $employee->save();
+        }
         return redirect()
             ->back()
-            ->with("Статус публикации изменен");
+            ->with('success',"Статус публикации изменен");
+
     }
 
 

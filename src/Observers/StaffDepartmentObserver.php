@@ -84,9 +84,9 @@ class StaffDepartmentObserver
         if ($department->children->count()){
             throw new PreventDeleteException("Невозможно удалить отдел, есть вложенные");
         }
-//        if ($department->employees->count()){
-//            throw new PreventDeleteException("Невозможно удалить отдел, есть сотрудники");
-//        }
+        if ($department->employees->count()){
+            throw new PreventDeleteException("Невозможно удалить отдел, есть сотрудники");
+        }
     }
 
     /**

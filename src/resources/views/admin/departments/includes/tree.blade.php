@@ -9,7 +9,7 @@
             <li>
                 @can("view", \App\StaffDepartment::class)
                     <a href="{{ route('admin.departments.show', ['department' => $department["slug"]]) }}"
-                       class="btn btn-link">
+                       class="btn btn-link{{ ! $department->published_at ? " text-secondary" : "" }}">
                         {{ $department["title"] }}
                     </a>
                 @else

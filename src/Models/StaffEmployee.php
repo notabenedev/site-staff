@@ -31,10 +31,6 @@ class StaffEmployee extends Model
 
         parent::booting();
 
-        static::creating(function (\App\StaffEmployee $model) {
-            $model->published_at = now();
-        });
-
         static::updated(function (\App\StaffEmployee $model) {
             // Забыть кэш.
             $model->forgetCache();
@@ -97,6 +93,24 @@ class StaffEmployee extends Model
     {
         $this->published_at = $this->published_at  ? null : now();
         $this->save();
+    }
+
+    /**
+     * Publish if one of departments is public
+     *
+     * @return bool
+     */
+
+    public function publishIfPublicDepartment(){
+        foreach ($this->departments as $department){
+            if ($department->published_at)
+            {
+                $this->published_at = now();
+                $this->save();
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
