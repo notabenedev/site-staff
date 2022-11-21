@@ -65,6 +65,7 @@ class StaffMakeCommand extends BaseConfigModelCommand
      */
     protected $controllers = [
         "Admin" => ["StaffDepartmentController", "StaffEmployeeController"],
+        "Site" => ["StaffDepartmentController"],
     ];
 
     /**
@@ -132,6 +133,7 @@ class StaffMakeCommand extends BaseConfigModelCommand
 
         if ($this->option("controllers") || $all) {
             $this->exportControllers("Admin");
+            $this->exportControllers("Site");
         }
 
         if ($this->option("policies") || $all) {

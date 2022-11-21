@@ -8,6 +8,6 @@ Route::group([
 "as" => "site.departments.",
 "prefix" => config("site-staff.departmentUrlName"),
 ], function () {
-Route::get("/", "DepartmentController@index")->name("index");
-Route::get("/{department}", "DepartmentController@show")->name("show");
+Route::get("/", "StaffDepartmentController@index")->name("index");
+Route::get("/{department}", "StaffDepartmentController@show")->name("show");
 });

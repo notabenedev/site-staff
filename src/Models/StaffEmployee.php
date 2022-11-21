@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Notabenedev\SiteStaff\Facades\StaffDepartmentActions;
 use PortedCheese\BaseSettings\Traits\ShouldGallery;
 use PortedCheese\BaseSettings\Traits\ShouldImage;
 use PortedCheese\BaseSettings\Traits\ShouldSlug;
@@ -31,16 +32,22 @@ class StaffEmployee extends Model
 
         parent::booting();
 
+        static::created(function (\App\StaffEmployee $model){
+            // Забыть кэш.
+            $model->forgetCache();
+        });
+
         static::updated(function (\App\StaffEmployee $model) {
             // Забыть кэш.
             $model->forgetCache();
         });
 
         static::deleting(function (\App\StaffEmployee $model) {
+            $model->departments()->sync([]);
+        });
+        static::deleted(function (\App\StaffEmployee $model) {
             // Забыть кэш.
             $model->forgetCache();
-
-            $model->departments()->sync([]);
         });
     }
 
@@ -147,8 +154,11 @@ class StaffEmployee extends Model
         $model = $this;
         $employee = Cache::rememberForever($key, function () use ($model) {
             $image = $model->image;
+            $departments = $model->departments;
+            $images = $model->images->sortBy('weight');
             return $model;
         });
+
         $view = view("site-staff::site.employees.teaser", [
             'employee' => $employee,
             'grid' => $grid,
@@ -156,39 +166,21 @@ class StaffEmployee extends Model
         return $view->render();
     }
 
-    /**
-     * Получить галлерею.
-     * @return object
-     */
-    public function getFullData()
-    {
-        $cacheKey = "staff-employee-full:{$this->id}";
-        $cached = Cache::get($cacheKey);
-        if (!empty($cached)) {
-            return $cached;
-        }
-        $gallery = $this->images->sortBy('weight');
-        $image = $this->image;
-        $departments = $this->departments;
-        $data = (object) [
-            'gallery' => $gallery,
-            'image' => $image,
-            "departments" => $departments,
-        ];
-        Cache::forever($cacheKey, $data);
-        return $data;
-    }
 
     /**
      * Очистить кэш.
      */
     public function forgetCache($full = FALSE)
     {
+        foreach ($this->departments as $department){
+            StaffDepartmentActions::forgetDepartmentEmployeesIds($department);
+        }
+
         if (!$full) {
             Cache::forget("staff-employee-teaser:{$this->id}-3");
-            Cache::forget("staff-employee-teaser:{$this->id}-6");
+            Cache::forget("staff-employee-teaser:{$this->id}-4");
         }
-        Cache::forget("staff-employee-full:{$this->id}");
+
     }
 
 }

@@ -6,7 +6,9 @@ use App\StaffDepartment;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Notabenedev\SiteStaff\Facades\StaffDepartmentActions;
 
 class StaffDepartmentActionsManager
 {
@@ -182,7 +184,7 @@ class StaffDepartmentActionsManager
     protected function makeTreeDataWithNoParent()
     {
         $departments = DB::table("staff_departments")
-            ->select("id", "title", "slug", "short", "parent_id", "published_at","priority")
+            ->select("id", "title", "slug", "short","description", "parent_id", "published_at","priority")
             ->orderBy("parent_id")
             ->get();
 
@@ -193,6 +195,7 @@ class StaffDepartmentActionsManager
                 "title" => $department->title,
                 'slug' => $department->slug,
                 'short' => $department->short,
+                'description' => $department->description,
                 'parent' => $department->parent_id,
                 "priority" => $department->priority,
                 "published_at" => $department->published_at,
@@ -406,6 +409,43 @@ class StaffDepartmentActionsManager
         $parent = $department->parent;
         if (! empty($parent)) {
             $this->forgetDepartmentParentsCache($parent);
+        }
+    }
+
+
+    /**
+     * Получить id позиций отделы, либо  отдела и под-отделов.
+     *
+     * @param int $departmentId
+     * @param $includeSubs
+     * @return mixed
+     */
+    public function getDepartmentEmployeesIds($departmentId)
+    {
+        $department = StaffDepartment::query()->where("id","=",$departmentId)->first();
+        $key = "staff-department-actions-getDepartmentEmployees:{$department->id}";
+        return Cache::rememberForever($key, function() use ($department) {
+            $employees = $department->employees;
+            foreach ($employees as $key => $item) {
+                $items[$item->id] = $item;
+            }
+            return $items;
+        });
+    }
+
+    /**
+     * Очистить кэш идентификаторов позиций.
+     *
+     * @param StaffDepartment $department
+     */
+    public function forgetDepartmentEmployeesIds(StaffDepartment $department)
+    {
+        $keys = ["staff-department-actions-getDepartmentEmployees:{$department->id}"];
+        foreach ($keys as $key){
+            Cache::forget("$key");
+            if (! empty($department->parent_id)) {
+                $this->forgetDepartmentEmployeesIds($department->parent);
+            }
         }
     }
 }

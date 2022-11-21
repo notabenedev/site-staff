@@ -10,6 +10,8 @@ use App\StaffDepartment;
 use App\Observers\Vendor\SiteStaff\StaffDepartmentObserver;
 use Notabenedev\SiteStaff\Events\StaffDepartmentChangePosition;
 use Notabenedev\SiteStaff\Listeners\DepartmentIdsInfoClearCache;
+use PortedCheese\BaseSettings\Events\ImageUpdate;
+use Notabenedev\SiteStaff\Listeners\ClearCacheOnUpdateImage;
 
 class StaffServiceProvider extends ServiceProvider
 {
@@ -74,13 +76,16 @@ class StaffServiceProvider extends ServiceProvider
         // Подключаем изображения.
         $imagecache = app()->config['imagecache.paths'];
         $imagecache[] = 'storage/employees/main';
-        $imagecache[] = 'storage/gallery/employees';
+        $imagecache[] = 'storage/gallery/employee';
         app()->config['imagecache.paths'] = $imagecache;
 
         // Подключаем галерею.
         $gallery = app()->config["gallery.models"];
         $gallery["employee"] = StaffEmployee::class;
         app()->config["gallery.models"] = $gallery;
+
+        // Фильтры
+        $this->extendImages();
 
         // Подключение метатегов.
         $seo = app()->config["seo-integration.models"];
@@ -129,5 +134,18 @@ class StaffServiceProvider extends ServiceProvider
     {
         // Изменение позиции группы.
         $this->app["events"]->listen(StaffDepartmentChangePosition::class, DepartmentIdsInfoClearCache::class);
+        // Подписаться на обновление изображений.
+        $this->app['events']->listen(ImageUpdate::class, ClearCacheOnUpdateImage::class);
+    }
+
+    /**
+     * Стили для изображений.
+     */
+    private function extendImages()
+    {
+        $imagecache = app()->config['imagecache.templates'];
+
+        $imagecache['certificate'] = \Notabenedev\SiteStaff\Filters\Certificate::class;
+        app()->config['imagecache.templates'] = $imagecache;
     }
 }
