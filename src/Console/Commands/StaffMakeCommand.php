@@ -23,6 +23,7 @@ class StaffMakeCommand extends BaseConfigModelCommand
     {--only-default : Create only default rules}
     {--menu : Create admin menu}
     {--vue : Export vue}
+    {--scss : Export scss}
     ';
 
 
@@ -105,6 +106,17 @@ class StaffMakeCommand extends BaseConfigModelCommand
     ];
 
     /**
+     * Стили.
+     *
+     * @var array
+     */
+    protected $scssIncludes = [
+        "app" => [
+            "site-staff/staff",
+        ],
+    ];
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -146,6 +158,10 @@ class StaffMakeCommand extends BaseConfigModelCommand
 
         if ($this->option("vue") || $all) {
             $this->makeVueIncludes("admin");
+        }
+
+        if ($this->option("scss") || $all) {
+            $this->makeScssIncludes("app");
         }
 
         return 0;

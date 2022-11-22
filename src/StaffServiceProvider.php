@@ -102,6 +102,7 @@ class StaffServiceProvider extends ServiceProvider
         // Assets.
         $this->publishes([
             __DIR__ . '/resources/js/components' => resource_path('js/components/vendor/site-staff'),
+            __DIR__ . "/resources/sass" => resource_path("sass/vendor/site-staff"),
         ], 'public');
     }
 

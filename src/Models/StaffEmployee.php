@@ -181,6 +181,20 @@ class StaffEmployee extends Model
             Cache::forget("staff-employee-teaser:{$this->id}-4");
         }
 
+        Cache::forget("staff-employees-getAllPublished");
+
+    }
+
+    public static function getAllPublished()
+    {
+        $key = "staff-employees-getAllPublished";
+        return Cache::rememberForever($key, function()  {
+            $employees = StaffEmployee::query()->whereNotNull("published_at")->orderBy("title")->get();
+            foreach ($employees as $key => $item) {
+                $items[$item->id] = $item;
+            }
+            return $items;
+        });
     }
 
 }

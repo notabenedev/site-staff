@@ -1,0 +1,113 @@
+.staff{
+
+  &-department{
+
+    &__item{
+
+    }
+
+    &__title{
+
+      font-weight: bold;
+      margin: 1rem 0;
+
+      &_level-1{
+        margin-bottom: 1.25rem;
+        font-size: 1.625rem;
+      }
+      &_level-2{
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+      }
+
+      &_level-3{
+        margin-bottom: 1.25rem;
+        font-size: 1.125rem;
+      }
+
+      &_level-4{
+        margin-bottom: 1.125rem;
+        font-size: 1rem;
+      }
+    }
+
+    &__short{
+      color: $secondary;
+      margin-bottom: 1rem;
+    }
+
+    &__description{
+
+    }
+
+  }
+
+  &-employee{
+
+    &s{
+
+    }
+
+    &__teaser{
+      margin: 1.5rem 0;
+    }
+
+    &__sticky{
+
+    }
+
+    &__image{
+
+      &-empty{
+
+        &_ico{
+
+        }
+
+      }
+    }
+
+    &__comment{
+      &-title{
+        color: $secondary;
+        margin-bottom: $font-size-base;
+      }
+    }
+
+    &__btn{
+      font-size: 0.75rem;
+      margin:  .25rem 0;
+    }
+
+    &__short{
+      color: $secondary;
+    }
+
+
+    &__body{
+
+    }
+
+    &__footer{
+      background-color: transparent;
+    }
+
+
+
+    &__collapse{
+
+      margin: 1rem 0;
+
+      &-btn{
+
+      }
+
+      &-eye{
+        margin-right: 0.75rem;
+      }
+
+    }
+
+
+  }
+}

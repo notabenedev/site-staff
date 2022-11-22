@@ -12,4 +12,5 @@
                             {--policies : Export models}
                             {--menu : Create admin menu}
                             {--vue : Export Vue components}
+                            {--scss : Export Scss}
     npm run dev

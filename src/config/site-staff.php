@@ -19,8 +19,8 @@ return [
     "employeeTitleName" => "ФИО",
     "employeeShortName" => "Специализация",
     "employeeDescriptionName" => "Описание",
-    "employeeCommentName" => "Дополнительная информация",
-    "employeeGalleryName" => "Сертификаты",
+    "employeeCommentName" => "График работы",
+    "employeeGalleryName" => "Дипломы и сертификаты",
 
     "departmentFacade" => \Notabenedev\SiteStaff\Helpers\StaffDepartmentActionsManager::class,
 

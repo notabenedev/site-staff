@@ -1,18 +1,18 @@
-<div class="staff__department-item staff__department-item_level-{{ $level }}"  id="{{ $item["slug"]}}StaffDepartment">
+<div class="staff-department__item staff-department__item_level-{{ $level }}"  id="{{ $item["slug"]}}StaffDepartment">
 
    @if (config("site-staff.siteDepartmentsTree",false) || (! config("site-staff.siteDepartmentsTree",false) && $level <2))
-        <h3 class="h{{$level+1}} staff__department-title staff__department-title_level-{{ $level }}">
+        <h2 class="h{{$level+1}} staff-department__title staff-department__title_level-{{ $level }}">
             {{ $item["title"] }}
-        </h3>
+        </h2>
 
         @isset($item['short'])
-            <div class="staff__department-short">
+            <div class="staff-department__short">
                 {!! $item['short']  !!}
             </div>
         @endisset
 
         @isset($item['description'])
-            <div class="staff__department-description">
+            <div class="staff-department__description">
                 {!! $item['description']  !!}
             </div>
         @endisset

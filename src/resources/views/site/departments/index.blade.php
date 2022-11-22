@@ -7,16 +7,24 @@
 @endsection
 
 @section('content')
-    <div class="col-12">
-        @foreach($rootDepartments as $item)
-            <div class="row staff__department">
-                @if (isset($item["published_at"]))
-                    <div class="col-12">
-                        @include("site-staff::site.departments.includes.item", ["item" => $item, "first" => true, "level" => 1])
-                    </div>
-                @endif
+    <div class="col-12 content-section">
+        @isset($rootDepartments)
+            @foreach($rootDepartments as $item)
+                <div class="row staff-department">
+                        @if (isset($item["published_at"]))
+                            <div class="col-12">
+                                @include("site-staff::site.departments.includes.item", ["item" => $item, "first" => true, "level" => 1])
+                            </div>
+                        @endif
+                </div>
+            @endforeach
+        @else
+            <div class="staff-epmloyees">
+                @foreach($employees as $id => $employee)
+                    {!! $employee->getTeaser() !!}
+                @endforeach
             </div>
-        @endforeach
+        @endisset
     </div>
 
 @endsection
