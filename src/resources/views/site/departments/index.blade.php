@@ -25,6 +25,9 @@
                 @endforeach
             </div>
         @endisset
+        @if (config("site-staff.employeeBntName"))
+            @include("site-staff::site.employees.includes.modal")
+        @endif
     </div>
 
 @endsection

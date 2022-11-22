@@ -45,6 +45,15 @@
             <div class="card-body staff-employee__body">
                 <h3 class="card-title">{{ $employee->title }}</h3>
                 <p class="card-text staff-employee__short">{{ $employee->short }}</p>
+                @if(config("site-staff.employeeBntName"))
+                    <a href="#" class="btn btn-outline-primary staff-employee__modal-btn"
+                       data-toggle="modal"
+                       data-target="#staffEmployeeModal"
+                       data-whatever="{{ $employee->title }}"
+                    >
+                        {{ config("site-staff.employeeBntName") }}
+                    </a>
+                @endif
                 {!! $employee->description !!}
 
                 @foreach($employee->images as $image)

@@ -13,4 +13,5 @@
                             {--menu : Create admin menu}
                             {--vue : Export Vue components}
                             {--scss : Export Scss}
+                            {--js : Export Scripts}
     npm run dev

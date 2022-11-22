@@ -24,6 +24,7 @@ class StaffMakeCommand extends BaseConfigModelCommand
     {--menu : Create admin menu}
     {--vue : Export vue}
     {--scss : Export scss}
+    {--js : Export scripts}
     ';
 
 
@@ -117,6 +118,17 @@ class StaffMakeCommand extends BaseConfigModelCommand
     ];
 
     /**
+     * Scripts.
+     *
+     * @var array
+     */
+    protected $jsIncludes = [
+        "app" => [
+            "site-staff/staff-modal",
+        ],
+    ];
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -162,6 +174,10 @@ class StaffMakeCommand extends BaseConfigModelCommand
 
         if ($this->option("scss") || $all) {
             $this->makeScssIncludes("app");
+        }
+
+        if ($this->option("js") || $all) {
+            $this->makeJsIncludes("app");
         }
 
         return 0;
