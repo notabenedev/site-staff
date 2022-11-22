@@ -84,6 +84,13 @@
       color: $secondary;
     }
 
+    &__description{
+      margin: 0.625rem 0;
+    }
+
+    &__departments{
+      margin: 0.875rem 0;
+    }
 
     &__body{
       h4{
@@ -114,7 +121,7 @@
     &__modal{
 
       &-btn{
-        margin-bottom: 1rem;
+        margin: 1rem 0;
       }
 
     }

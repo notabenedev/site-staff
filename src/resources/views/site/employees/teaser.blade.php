@@ -29,7 +29,23 @@
                             {!! $employee->comment !!}
                         </div>
                     @endisset
-                    <div class="line mb-4"></div>
+                    @if(config("site-staff.employeeBntName"))
+                            <a href="#" class="btn btn-outline-primary staff-employee__modal-btn"
+                               data-toggle="modal"
+                               data-target="#staffEmployeeModal"
+                               data-whatever="{{ $employee->title }}"
+                            >
+                                {{ config("site-staff.employeeBntName") }}
+                            </a>
+                        @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-lg-9">
+            <div class="card-body staff-employee__body">
+                <h3 class="card-title">{{ $employee->title }}</h3>
+                <div class="card-text staff-employee__short">{{ $employee->short }}</div>
+                <div class="card-text staff-employee__departments">
                     @foreach($employee->departments as $dep)
                         @if ($dep->published_at)
                             <a href="{{ route("site.departments.show", ['department' => $dep]) }}"
@@ -39,22 +55,9 @@
                         @endif
                     @endforeach
                 </div>
-            </div>
-        </div>
-        <div class="col-md-8 col-lg-9">
-            <div class="card-body staff-employee__body">
-                <h3 class="card-title">{{ $employee->title }}</h3>
-                <p class="card-text staff-employee__short">{{ $employee->short }}</p>
-                @if(config("site-staff.employeeBntName"))
-                    <a href="#" class="btn btn-outline-primary staff-employee__modal-btn"
-                       data-toggle="modal"
-                       data-target="#staffEmployeeModal"
-                       data-whatever="{{ $employee->title }}"
-                    >
-                        {{ config("site-staff.employeeBntName") }}
-                    </a>
-                @endif
-                {!! $employee->description !!}
+                <div class="card-text staff-employee__description">
+                    {!! $employee->description !!}
+                </div>
 
                 @foreach($employee->images as $image)
                     @if ($loop->first)

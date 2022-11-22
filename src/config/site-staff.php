@@ -4,7 +4,7 @@ return [
     "siteDepartmentName" => "Отделы",
     "siteEmployeeName" => "Сотрудники",
 
-    "siteDepartmentsTree" => true,
+    "siteDepartmentsTree" => false,
     "certificateBgColor" => 'fafafa',
     "siteBreadcrumb" => true,
 
