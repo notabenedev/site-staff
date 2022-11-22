@@ -6,7 +6,7 @@
 @section('admin')
     @include("site-staff::admin.employees.pills")
 
-    <div class="col-12 col-md-8">
+    <div class="col-12">
         @if($employee->image)
                 <div class="card">
                     <div class="card-header">
@@ -78,10 +78,4 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-4">
-        <div>
-            {!! $employee->getTeaser() !!}
-        </div>
-    </div>
-
 @endsection

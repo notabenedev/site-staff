@@ -21,7 +21,7 @@
         @else
             <div class="staff-epmloyees">
                 @foreach($employees as $id => $employee)
-                    {!! $employee->getTeaser() !!}
+                    {!! $employee->getTeaser( (config("site-staff.employeeGrid") ? config("site-staff.employeeGrid") : 3)) !!}
                 @endforeach
             </div>
         @endisset

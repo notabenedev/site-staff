@@ -148,6 +148,12 @@ class StaffServiceProvider extends ServiceProvider
         $imagecache = app()->config['imagecache.templates'];
 
         $imagecache['certificate'] = \Notabenedev\SiteStaff\Filters\Certificate::class;
+        $imagecache['employees'] = \Notabenedev\SiteStaff\Filters\Employees::class;
+        $imagecache['employees-grid-xl-4'] = \Notabenedev\SiteStaff\Filters\EmployeesGridXl4::class;
+        $imagecache['employees-grid-xl-3'] = \Notabenedev\SiteStaff\Filters\EmployeesGridXl3::class;
+        $imagecache['employees-grid-lg-4'] = \Notabenedev\SiteStaff\Filters\EmployeesGridLg4::class;
+        $imagecache['employees-grid-lg-3'] = \Notabenedev\SiteStaff\Filters\EmployeesGridLg3::class;
+        $imagecache['employees-grid-md-4'] = \Notabenedev\SiteStaff\Filters\EmployeesGridMd4::class;
         app()->config['imagecache.templates'] = $imagecache;
     }
 }

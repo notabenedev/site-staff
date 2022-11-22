@@ -1,16 +1,17 @@
-<div class="card card-base staff-employee__teaser" id="{{ $employee->slug }}StaffEmployee">
-    <div class="row no-gutters">
-        <div class="col-md-4 col-lg-3">
+<div class="card{{ (config("site-staff.employeeCardBase") ? " card-base" : " bg-transparent border-0") }} staff-employee__teaser" id="{{ $employee->slug }}StaffEmployee">
+    <div class="row">
+        <div class="col-md-4 col-lg-{{ $grid }}">
             <div class="sticky-top staff-employee__sticky">
                 @isset ($employee->image)
                     @picture([
                     'image' => $employee->image,
-                    'template' => "sm-grid-12",
+                    'template' => "employees",
                     'grid' => [
-                    "lg-grid-4" => 992,
-                    'md-grid-6' => 768,
+                    "employees-grid-xl-".$grid => 1200,
+                    "employees-grid-lg-".$grid => 992,
+                    'employees-grid-md-4' => 768,
                     ],
-                    'imgClass' => 'card-img-top staff-employee__image',
+                    'imgClass' => 'img-fluid rounded staff-employee__image',
                     ])@endpicture
                 @endisset
                 @empty ($employee->image)
@@ -20,7 +21,7 @@
                             </svg>
                         </div>
                     @endempty
-                <div class="card-footer staff-employee__footer">
+                <div class="{{ (config("site-staff.employeeCardBase") ? "card-footer " : "") }}staff-employee__footer">
                     @isset($employee->comment)
                         <div class="card-text staff-employee__comment-title">
                             {{ config("site-staff.employeeCommentName") }}:
@@ -41,8 +42,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8 col-lg-9">
-            <div class="card-body staff-employee__body">
+        <div class="col-md-8 col-lg-{{ 12 - $grid }}">
+            <div class="{{ (config("site-staff.employeeCardBase") ? "card-body " : "") }}staff-employee__body">
                 <h3 class="card-title">{{ $employee->title }}</h3>
                 <div class="card-text staff-employee__short">{{ $employee->short }}</div>
                 <div class="card-text staff-employee__departments">

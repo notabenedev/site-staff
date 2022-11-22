@@ -16,6 +16,8 @@ return [
     "departmentUrlName" => "department",
     "employeeUrlName" => "employee",
 
+    "employeeCardBase" => false,
+    "employeeGrid" => 3,
     "employeeTitleName" => "ФИО",
     "employeeShortName" => "Специализация",
     "employeeDescriptionName" => "Описание",
