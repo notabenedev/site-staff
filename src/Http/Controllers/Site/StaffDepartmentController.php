@@ -18,7 +18,7 @@ class StaffDepartmentController extends Controller
                 (object) [
                     'active' => true,
                     'url' => route("site.departments.index"),
-                    'title' => config("site-staff.siteDepartmentName"),
+                    'title' => config("site-staff.siteEmployeeName"),
                 ]
             ];
         }

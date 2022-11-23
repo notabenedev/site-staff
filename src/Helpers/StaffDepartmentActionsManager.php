@@ -316,7 +316,7 @@ class StaffDepartmentActionsManager
         }
         else {
             $breadcrumb[] = (object) [
-                "title" => config("site-staff.siteDepartmentName"),
+                "title" => config("site-staff.siteEmployeeName"),
                 "url" => route("site.departments.index"),
                 "active" => false,
             ];
