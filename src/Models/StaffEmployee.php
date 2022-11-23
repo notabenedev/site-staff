@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Notabenedev\SiteStaff\Facades\StaffDepartmentActions;
 use PortedCheese\BaseSettings\Traits\ShouldGallery;
 use PortedCheese\BaseSettings\Traits\ShouldImage;
@@ -193,9 +194,18 @@ class StaffEmployee extends Model
     {
         $key = "staff-employees-getAllPublished";
         return Cache::rememberForever($key, function()  {
-            $employees = StaffEmployee::query()->whereNotNull("published_at")->orderBy("title")->get();
-            foreach ($employees as $key => $item) {
-                $items[$item->id] = $item;
+            $departments = StaffDepartment::query()
+                ->select("id")
+                ->whereNotNull("published_at")
+                ->orderBy("priority")
+                ->get();
+            $items = [];
+            foreach ($departments as $department){
+                $employees = $department->employees;
+                foreach ($employees as $item) {
+                    if ($item->published_at)
+                        $items[$item->id] = $item;
+                }
             }
             return $items;
         });

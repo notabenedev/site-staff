@@ -47,11 +47,11 @@
                 <h3 class="card-title">{{ $employee->title }}</h3>
                 <div class="card-text staff-employee__short">{{ $employee->short }}</div>
                 <div class="card-text staff-employee__departments">
-                    @foreach($employee->departments as $dep)
-                        @if ($dep->published_at)
-                            <a href="{{ route("site.departments.show", ['department' => $dep]) }}"
+                    @foreach($employee->departments as $department)
+                        @if ($department->published_at)
+                            <a href="{{ route("site.departments.show", ['department' => $department]) }}"
                                class="btn btn-outline-secondary staff-employee__btn">
-                                {{ $dep->title }}
+                                {{ $department->title }}
                             </a>
                         @endif
                     @endforeach
@@ -59,7 +59,6 @@
                 <div class="card-text staff-employee__description">
                     {!! $employee->description !!}
                 </div>
-
                 @foreach($employee->images as $image)
                     @if ($loop->first)
                         <a href="#"

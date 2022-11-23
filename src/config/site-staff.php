@@ -4,7 +4,7 @@ return [
     "siteDepartmentName" => "Отделы",
     "siteEmployeeName" => "Сотрудники",
 
-    "siteDepartmentsTree" => false,
+    "siteDepartmentsTree" => false,//  php artisan cache:clear needed
     "certificateBgColor" => 'fafafa',
     "siteBreadcrumb" => true,
 

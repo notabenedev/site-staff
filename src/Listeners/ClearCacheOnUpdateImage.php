@@ -3,6 +3,7 @@
 namespace Notabenedev\SiteStaff\Listeners;
 
 use App\StaffEmployee;
+use Notabenedev\SiteStaff\Facades\StaffDepartmentActions;
 
 class ClearCacheOnUpdateImage
 {
@@ -27,6 +28,11 @@ class ClearCacheOnUpdateImage
         $morph = $event->morph;
         if (!empty($morph) && get_class($morph) == StaffEmployee::class) {
             $morph->forgetCache();
+            $departments = $morph->departments;
+            foreach ($departments as $department){
+                // Очистить id сотрудников
+                StaffDepartmentActions::forgetDepartmentEmployeesIds($department);
+            }
         }
     }
 }

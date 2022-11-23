@@ -415,7 +415,7 @@ class StaffDepartmentActionsManager
 
 
     /**
-     * Получить id позиций отделы, либо  отдела и под-отделов.
+     * Получить позиции отдела.
      *
      * @param int $departmentId
      * @param $includeSubs

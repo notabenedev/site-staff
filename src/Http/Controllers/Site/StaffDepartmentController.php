@@ -21,7 +21,7 @@ class StaffDepartmentController extends Controller
         }
         else {
             return  view("site-staff::site.departments.index", [
-                "employees" => StaffEmployee::getAllPublished(),
+                "employees" => array_unique(StaffEmployee::getAllPublished()),
             ]);
         }
     }
@@ -46,7 +46,7 @@ class StaffDepartmentController extends Controller
 
         }
         else {
-            // Вывести сотрудников вложенных отделов
+            // Вывести также сотрудников вложенных отделов
             // $ids = StaffDepartmentActions::getDepartmentChildren($department);
             // foreach ($ids as $id){
             //     $employees[$id]  = StaffDepartmentActions::getDepartmentEmployeesIds($id);
