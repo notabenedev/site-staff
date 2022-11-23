@@ -83,6 +83,7 @@ class StaffDepartmentActionsManager
         }
     }
 
+
     /**
      * Сортировка результата.
      *
@@ -426,6 +427,7 @@ class StaffDepartmentActionsManager
         $key = "staff-department-actions-getDepartmentEmployees:{$department->id}";
         return Cache::rememberForever($key, function() use ($department) {
             $employees = $department->employees;
+            $items = [];
             foreach ($employees as $key => $item) {
                 $items[$item->id] = $item;
             }

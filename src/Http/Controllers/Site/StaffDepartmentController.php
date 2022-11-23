@@ -15,8 +15,7 @@ class StaffDepartmentController extends Controller
 
             $departments = StaffDepartmentActions::getTree();
             return view("site-staff::site.departments.index", [
-                "rootDepartments" => StaffDepartmentActions::getRootDepartments(),
-                "departments" => $departments,
+                "rootDepartments" => $departments,
             ]);
 
         }
@@ -25,6 +24,56 @@ class StaffDepartmentController extends Controller
                 "employees" => StaffEmployee::getAllPublished(),
             ]);
         }
+    }
 
+    public function show(StaffDepartment  $department){
+        if (config("site-staff.siteDepartmentsTree", true)) {
+
+            return view("site-staff::site.departments.show", [
+                "rootDepartment" => [
+                    "title" => $department->title,
+                    'slug' => $department->slug,
+                    'short' => $department->short,
+                    'description' => $department->description,
+                    'parent' => $department->parent_id,
+                    "priority" => $department->priority,
+                    "published_at" => $department->published_at,
+                    "id" => $department->id,
+                    'children' => StaffDepartmentActions::getChildrenTree($department),
+                    "siteUrl" => route("site.departments.show", ["department" => $department->slug]),
+                ],
+            ]);
+
+        }
+        else {
+            // Вывести сотрудников вложенных отделов
+            // $ids = StaffDepartmentActions::getDepartmentChildren($department);
+            // foreach ($ids as $id){
+            //     $employees[$id]  = StaffDepartmentActions::getDepartmentEmployeesIds($id);
+            // }
+            $employees[$department->id] = StaffDepartmentActions::getDepartmentEmployeesIds($department->id);
+            foreach ($employees as $key => $items){
+                foreach ($items as $id => $item){
+                    if ($item->published_at)
+                        $emp[$id] = $item;
+                }
+            }
+
+            return  view("site-staff::site.departments.show", [
+                "employees" => isset($emp) ? array_unique($emp): [],
+                "rootDepartment" => [
+                    "title" => $department->title,
+                    'slug' => $department->slug,
+                    'short' => $department->short,
+                    'description' => $department->description,
+                    'parent' => $department->parent_id,
+                    "priority" => $department->priority,
+                    "published_at" => $department->published_at,
+                    "id" => $department->id,
+                    'children' => [],
+                    "siteUrl" => route("site.departments.show", ["department" => $department->slug]),
+                ],
+            ]);
+        }
     }
 }

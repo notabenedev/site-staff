@@ -37,6 +37,10 @@ class StaffEmployee extends Model
             $model->forgetCache();
         });
 
+        static::updating(function (\App\StaffEmployee $model) {
+            // Забыть кэш.
+            $model->forgetCache();
+        });
         static::updated(function (\App\StaffEmployee $model) {
             // Забыть кэш.
             $model->forgetCache();
@@ -75,11 +79,11 @@ class StaffEmployee extends Model
     }
 
     /**
-     * Обновить секции новости.
+     * Обновить отделы.
      *
      * @param $userInput
      */
-    public function updateDepartments($userInput, $new = false)
+    public function updateDepartments($userInput)
     {
         $departmentIds = [];
         foreach ($userInput as $key => $value) {

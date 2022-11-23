@@ -2,6 +2,7 @@
 
 namespace Notabenedev\SiteStaff\Listeners;
 
+use Illuminate\Support\Facades\Cache;
 use Notabenedev\SiteStaff\Events\StaffDepartmentChangePosition;
 use Notabenedev\SiteStaff\Facades\StaffDepartmentActions;
 
@@ -29,5 +30,8 @@ class DepartmentIdsInfoClearCache
         // Очистить список id категорий.
         StaffDepartmentActions::forgetDepartmentChildrenIdsCache($department);
         StaffDepartmentActions::forgetDepartmentParentsCache($department);
+        // Очистить id сотрудников
+        StaffDepartmentActions::forgetDepartmentEmployeesIds($department);
+        Cache::forget("staff-employees-getAllPublished");
     }
 }

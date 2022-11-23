@@ -19,7 +19,9 @@
    @endif
 
     @foreach(\Notabenedev\SiteStaff\Facades\StaffDepartmentActions::getDepartmentEmployeesIds($item["id"]) as $id => $employee)
-           {!! $employee->getTeaser((config("site-staff.employeeGrid") ? config("site-staff.employeeGrid") : 3)) !!}
+        @if ($employee->published_at)
+               {!! $employee->getTeaser((config("site-staff.employeeGrid") ? config("site-staff.employeeGrid") : 3)) !!}
+           @endif
     @endforeach
 
     @if (! empty($item["children"]))

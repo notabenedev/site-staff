@@ -1,94 +1,54 @@
 @extends('layouts.boot')
 
-@section('page-title', $group->title.' - '.config("site-group-price.sitePackageName","Прайс "))
+@section('page-title', $rootDepartment["title"]." -".config("site-staff.sitePackageName","Сотрудники").' - ')
+
+@section('header-title')
+      {{ $rootDepartment["title"] }}
+@endsection
 
 @section('content')
-    @if (! config("site-group-price.onePage",false))
-        <div class="col-12 col-lg-3 order-lg-first">
-            @include('site-group-price::site.groups.includes.sidebar', ["group" => $group])
-        </div>
-    @endif
-
-    <div class="col-12 col-lg-9">
-        <div class="row price__group">
-            <div class="col-12">
-                <h1 class="h1">
-                    {{  $group->title }}
-                </h1>
-                @isset($group->short)
-                    <div class="price__group-short">
-                        {!! $group->short  !!}
-                    </div>
-                @endisset
-            </div>
-        </div>
-
-        @if (config("site-group-price.siteHeadersShow", true) && $group->prices->count())
-            <div class="row price__header">
-                <div class="col-12 col-sm-7 col-md-8 col-lg-9 price__header-title">
-                    {{ config("site-group-price.sitePriceHeaderTitleName", 'Наименование') }}
-                </div>
-                <div class="col-12 col-sm-5 col-md-4 col-lg-3 price__header-price">
-                    {{ config("site-group-price.sitePriceHeaderPriceName", 'Цена (в рублях)') }}
-                </div>
-            </div>
-        @endif
-
-{{--        @foreach(\Notabenedev\SiteGroupPrice\Facades\PriceActions::getGroupPriceIds($group->id) as $id => $price)--}}
-{{--            @include('site-group-price::site.groups.includes.item-price',--}}
-{{--            ['id' => $id, 'loop' => $loop, 'price' => $price, 'margin' => true]--}}
-{{--            )--}}
-{{--        @endforeach--}}
-        @foreach($group->prices as $price)
-            @include('site-group-price::site.groups.includes.item-price',
-            ['id' => $price->id, 'loop' => $loop, 'price' => $price, 'margin' => true]
-            )
-        @endforeach
-
-        @if($group->nested)
-            @foreach($groups as $item)
-                <div class="row price__group">
-                    @if (isset($item["published_at"]))
-                        <div class="col-12">
-                            @include("site-group-price::site.groups.includes.item", ["item" => $item, "first" => true, "level" => 1])
+    <div class="col-12 content-section">
+        @isset($employees)
+            <div class="staff-epmloyees">
+                <div class="row staff-department">
+                    <div class="col-12">
+                        <div class="staff-department__item staff-department__item_level-1"  id="{{ $rootDepartment["slug"]}}StaffDepartment">
+                            <h2 class="h2 staff-department__title staff-department__title_level-1">
+                                {{ $rootDepartment["title"] }}
+                            </h2>
                         </div>
-                    @endif
+                        @isset($rootDepartment['short'])
+                            <div class="staff-department__short">
+                                {!! $rootDepartment['short']  !!}
+                            </div>
+                        @endisset
+
+                        @isset($rootDepartment['description'])
+                            <div class="staff-department__description">
+                                {!! $rootDepartment['description']  !!}
+                            </div>
+                        @endisset
+                    </div>
                 </div>
-            @endforeach
-            @else
-            <div class="row price__group">
-                <div class="col-12 d-flex flex-column flex-sm-row">
-                @foreach($group->children as $item)
-                    @if (isset($item->published_at))
-                        <a class="btn btn-outline-primary price__group-child" href="{{ route("site.groups.show", ["group" => $item]) }}">
-                            {{ $item->title }}
-                        </a>
+                @foreach($employees as $id => $employee)
+                    @if ($employee->published_at)
+                    {!! $employee->getTeaser( (config("site-staff.employeeGrid") ? config("site-staff.employeeGrid") : 3)) !!}
                     @endif
                 @endforeach
-                </div>
             </div>
+
+            @else
+                @if ($rootDepartment["published_at"])
+                    <div class="row staff-department">
+                        <div class="col-12">
+                            @include("site-staff::site.departments.includes.item", ["item" => $rootDepartment, "first" => true, "level" => 1])
+                        </div>
+                    </div>
+                @endif
+        @endisset
+        @if (config("site-staff.employeeBntName"))
+            @include("site-staff::site.employees.includes.modal")
         @endif
-
-        <div class="row price__group">
-            <div class="col-12">
-                @isset($group->description)
-                    <div class="price__group-description">
-                        {!! $group->description  !!}
-                    </div>
-                @endisset
-                @isset($group->accent)
-                    <div class="price__group-accent">
-                        {{ $group->accent }}
-                    </div>
-                @endisset
-                @isset($group->info)
-                    <div class="price__group-info">
-                        {!! $group->info !!}
-                    </div>
-                @endisset
-            </div>
-        </div>
-
     </div>
 
 @endsection

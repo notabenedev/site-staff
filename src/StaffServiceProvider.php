@@ -9,9 +9,11 @@ use Notabenedev\SiteStaff\Console\Commands\StaffMakeCommand;
 use App\StaffDepartment;
 use App\Observers\Vendor\SiteStaff\StaffDepartmentObserver;
 use Notabenedev\SiteStaff\Events\StaffDepartmentChangePosition;
+use Notabenedev\SiteStaff\Listeners\DepartmentEmployeesPriorityClearCache;
 use Notabenedev\SiteStaff\Listeners\DepartmentIdsInfoClearCache;
 use PortedCheese\BaseSettings\Events\ImageUpdate;
 use Notabenedev\SiteStaff\Listeners\ClearCacheOnUpdateImage;
+use PortedCheese\BaseSettings\Events\PriorityUpdate;
 
 class StaffServiceProvider extends ServiceProvider
 {
@@ -138,6 +140,8 @@ class StaffServiceProvider extends ServiceProvider
         $this->app["events"]->listen(StaffDepartmentChangePosition::class, DepartmentIdsInfoClearCache::class);
         // Подписаться на обновление изображений.
         $this->app['events']->listen(ImageUpdate::class, ClearCacheOnUpdateImage::class);
+        // Подписаться на изменения приоритета сотрудника
+        $this->app['events']->listen(PriorityUpdate::class, DepartmentEmployeesPriorityClearCache::class);
     }
 
     /**
