@@ -3,7 +3,7 @@
 @section('page-title', $rootDepartment["title"]." -".config("site-staff.sitePackageName","Сотрудники").' - ')
 
 @section('header-title')
-    {{ config("site-staff.siteDepartmentName") }}: {{ $rootDepartment["title"] }}
+    {{ config("site-staff.siteEmployeeName") }} - {{ $rootDepartment["title"] }}
 @endsection
 
 @section('content')
