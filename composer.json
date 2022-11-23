@@ -12,7 +12,9 @@
     "minimum-stability": "dev",
     "require": {
         "portedcheese/base-settings": "@dev",
-        "portedcheese/seo-integration": "@dev"
+        "portedcheese/seo-integration": "@dev",
+        "portedcheese/ajax-forms": "@dev",
+        "portedcheese/admin-sitem-menu": "@dev"
     },
     "autoload": {
         "psr-4": {
