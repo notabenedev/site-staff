@@ -302,6 +302,42 @@ class StaffDepartmentActionsManager
     }
 
     /**
+     * Хлебные крошки для сайта.
+     *
+     * @param StaffDepartment $department
+     * @param bool $parent
+     * @return array
+     */
+    public function getSiteBreadcrumb(StaffDepartment $department, $parent = false)
+    {
+        $breadcrumb = null;
+        if (! empty($department->parent_id)) {
+            $breadcrumb = $this->getSiteBreadcrumb($department->parent, false, true);
+        }
+        else {
+            $breadcrumb[] = (object) [
+                "title" => config("site-staff.siteDepartmentName"),
+                "url" => route("site.departments.index"),
+                "active" => false,
+            ];
+        }
+
+        $breadcrumb[] = (object) [
+            "title" => $department->title,
+            "url" => route("site.departments.show", ["department" => $department]),
+            "active" => false,
+        ];
+
+        if (! $parent) {
+            $length = count($breadcrumb);
+            $breadcrumb[$length - 1]->active = true;
+        }
+
+        return $breadcrumb;
+    }
+
+
+    /**
      * Get root departments
      *
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection

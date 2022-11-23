@@ -11,22 +11,43 @@ class StaffDepartmentController extends Controller
 {
     public function index()
     {
+        $siteBreadcrumb = null;
+
+        if (config("site-staff.siteBreadcrumb")){
+            $siteBreadcrumb = [
+                (object) [
+                    'active' => true,
+                    'url' => route("site.departments.index"),
+                    'title' => config("site-staff.siteDepartmentName"),
+                ]
+            ];
+        }
+
         if (config("site-staff.siteDepartmentsTree", true)) {
 
             $departments = StaffDepartmentActions::getTree();
             return view("site-staff::site.departments.index", [
                 "rootDepartments" => $departments,
+                "siteBreadcrumb" => $siteBreadcrumb,
             ]);
 
         }
         else {
             return  view("site-staff::site.departments.index", [
                 "employees" => array_unique(StaffEmployee::getAllPublished()),
+                "siteBreadcrumb" => $siteBreadcrumb,
             ]);
         }
     }
 
     public function show(StaffDepartment  $department){
+
+        $siteBreadcrumb = null;
+
+        if (config("site-staff.siteBreadcrumb")){
+            $siteBreadcrumb =  $siteBreadcrumb = StaffDepartmentActions::getSiteBreadcrumb($department);
+        }
+
         if (config("site-staff.siteDepartmentsTree", true)) {
 
             return view("site-staff::site.departments.show", [
@@ -42,6 +63,7 @@ class StaffDepartmentController extends Controller
                     'children' => StaffDepartmentActions::getChildrenTree($department),
                     "siteUrl" => route("site.departments.show", ["department" => $department->slug]),
                 ],
+                "siteBreadcrumb" => $siteBreadcrumb,
             ]);
 
         }
@@ -73,6 +95,7 @@ class StaffDepartmentController extends Controller
                     'children' => [],
                     "siteUrl" => route("site.departments.show", ["department" => $department->slug]),
                 ],
+                "siteBreadcrumb" => $siteBreadcrumb,
             ]);
         }
     }

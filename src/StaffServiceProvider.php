@@ -75,6 +75,11 @@ class StaffServiceProvider extends ServiceProvider
             $view->with("departments", $departments);
         });
 
+        // SVG.
+        $svg = app()->config["theme.configSvg"];
+        $svg[] = "site-staff::layouts.svg";
+        app()->config["theme.configSvg"] = $svg;
+
         // Подключаем изображения.
         $imagecache = app()->config['imagecache.paths'];
         $imagecache[] = 'storage/employees/main';
