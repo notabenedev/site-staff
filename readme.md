@@ -1,5 +1,5 @@
 ## Конфиг
-    php artisan vendor:publish --provider="Notabenedev\SitePages\PagesServiceProvider" --tag=config
+    php artisan vendor:publish --provider="Notabenedev\SiteStaff\StaffServiceProvider" --tag=config
 
 ## Install
     php artisan migrate
