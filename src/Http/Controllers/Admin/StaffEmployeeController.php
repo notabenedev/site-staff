@@ -17,7 +17,7 @@ class StaffEmployeeController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->authorizeResource(StaffDepartment::class, "employee");
+        $this->authorizeResource(StaffEmployee::class, "employee");
     }
 
     /**
