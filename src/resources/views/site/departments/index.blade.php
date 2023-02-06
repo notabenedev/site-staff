@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="col-12 content-section">
+    <div class="col-12">
         @isset($rootDepartments)
             @foreach($rootDepartments as $item)
                 <div class="row staff-department">
