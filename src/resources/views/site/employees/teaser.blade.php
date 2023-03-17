@@ -1,4 +1,4 @@
-<div class="card{{ (config("site-staff.employeeCardBase") ? " card-base" : " bg-transparent border-0") }} staff-employee__teaser" id="{{ $employee->slug }}StaffEmployee">
+<div class="card{{ (config("site-staff.employeeCardBase") ? " card-base" : " bg-transparent border-0") }} staff-employee__teaser" id="{{ $employee->slug }}">
     <div class="row">
         <div class="col-md-4 col-lg-{{ $grid }}">
             <div class="sticky-top staff-employee__sticky">
