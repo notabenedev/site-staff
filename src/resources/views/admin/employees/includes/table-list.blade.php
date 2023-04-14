@@ -43,7 +43,7 @@
                                         </button>
                                     @endcan
                                 </div>
-                                @can("publish", \App\StaffEmployee::class)
+                                @can("update", \App\StaffEmployee::class)
                                     <div class="btn-group btn-group-sm">
                                         <button type="button" class="btn btn-{{ $item->published_at ? "success" : "secondary" }}" data-confirm="{{ "publish-form-{$item->id}" }}">
                                             <i class="fas fa-toggle-{{ $item->published_at ? "on" : "off" }}"></i>
@@ -51,7 +51,7 @@
                                     </div>
                                 @endcan
                             </div>
-                            @can("publish", \App\StaffEmployee::class)
+                            @can("update", \App\StaffEmployee::class)
                                 <confirm-form :id="'{{ "publish-form-{$item->id}" }}'" text="Это изменит статус публикации" confirm-text="Да, изменить!">
                                     <template>
                                         <form action="{{ route('admin.employees.publish', ["employee" => $item]) }}"
