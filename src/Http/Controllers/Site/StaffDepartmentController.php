@@ -3,6 +3,7 @@
 namespace Notabenedev\SiteStaff\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Meta;
 use App\StaffDepartment;
 use App\StaffEmployee;
 use Notabenedev\SiteStaff\Facades\StaffDepartmentActions;
@@ -12,6 +13,7 @@ class StaffDepartmentController extends Controller
     public function index()
     {
         $siteBreadcrumb = null;
+        $pageMetas = Meta::getByPageKey(config("site-staff.departmentUrlName"));
 
         if (config("site-staff.siteBreadcrumb")){
             $siteBreadcrumb = [
@@ -29,6 +31,7 @@ class StaffDepartmentController extends Controller
             return view("site-staff::site.departments.index", [
                 "rootDepartments" => $departments,
                 "siteBreadcrumb" => $siteBreadcrumb,
+                "pageMetas" => $pageMetas,
             ]);
 
         }
@@ -36,6 +39,7 @@ class StaffDepartmentController extends Controller
             return  view("site-staff::site.departments.index", [
                 "employees" => array_unique(StaffEmployee::getAllPublished()),
                 "siteBreadcrumb" => $siteBreadcrumb,
+                "pageMetas" => $pageMetas,
             ]);
         }
     }
@@ -47,6 +51,8 @@ class StaffDepartmentController extends Controller
         if (config("site-staff.siteBreadcrumb")){
             $siteBreadcrumb =  $siteBreadcrumb = StaffDepartmentActions::getSiteBreadcrumb($department);
         }
+
+        $pageMetas = Meta::getByModelKey($department);
 
         if (config("site-staff.siteDepartmentsTree", true)) {
 
@@ -96,6 +102,7 @@ class StaffDepartmentController extends Controller
                     "siteUrl" => route("site.departments.show", ["department" => $department->slug]),
                 ],
                 "siteBreadcrumb" => $siteBreadcrumb,
+                "pageMetas" => $pageMetas,
             ]);
         }
     }
