@@ -7,6 +7,7 @@
                     'image' => $employee->image,
                     'template' => "employees",
                     'grid' => [
+                    "employees-grid-xxl-".$grid => 1400,
                     "employees-grid-xl-".$grid => 1200,
                     "employees-grid-lg-".$grid => 992,
                     'employees-grid-md-4' => 768,
@@ -32,9 +33,9 @@
                     @endisset
                     @if(config("site-staff.employeeBntName"))
                             <a href="#" class="btn btn-outline-primary staff-employee__modal-btn"
-                               data-toggle="modal"
-                               data-target="#staffEmployeeModal"
-                               data-whatever="{{ $employee->title }}"
+                               data-bs-toggle="modal"
+                               data-bs-target="#staffEmployeeModal"
+                               data-bs-whatever="{{ $employee->title }}"
                             >
                                 {{ config("site-staff.employeeBntName") }}
                             </a>
@@ -62,8 +63,8 @@
                 @foreach($employee->images as $image)
                     @if ($loop->first)
                         <a href="#"
-                           data-toggle="collapse"
-                           data-target="#employee{{ $employee->slug }}Collapse"
+                           data-bs-toggle="collapse"
+                           data-bs-target="#employee{{ $employee->slug }}Collapse"
                            class="btn btn-outline-primary staff-employee__collapse-btn">
                             <i class="fas fa-eye staff-employee__collapse-eye"></i>
                             {{ config("site-staff.employeeGalleryName", "Сертификаты") }}

@@ -34,7 +34,7 @@
                     @can("create", \App\StaffDepartment::class)
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle {{ $currentRoute == 'admin.departments.create-child' ? " active" : "" }}"
-                               data-toggle="dropdown"
+                               data-bs-toggle="dropdown"
                                href="#"
                                role="button"
                                aria-haspopup="true"

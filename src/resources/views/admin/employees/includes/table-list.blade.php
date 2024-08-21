@@ -26,7 +26,7 @@
                     @canany(["view", "update", "delete", "publish"], \App\StaffEmployee::class)
                         <td>
                             <div role="toolbar" class="btn-toolbar">
-                                <div class="btn-group btn-group-sm mr-1">
+                                <div class="btn-group btn-group-sm me-1">
                                     @can("update", \App\StaffEmployee::class)
                                         <a href="{{ route("admin.employees.edit", ["employee" => $item]) }}" class="btn btn-primary">
                                             <i class="far fa-edit"></i>
