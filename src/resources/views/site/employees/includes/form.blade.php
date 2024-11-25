@@ -4,6 +4,7 @@
         @if (config("site-staff.employeeTitleInputName"))
             <div class="col-12">
                 <div class="form-group">
+                    <span class="d-none" id="staffEmployeeModalHeader"></span>
                     <label for="staffEmployeeTitle">{{ config("site-staff.employeeTitleInputName") }} <span class="text-danger">*</span></label>
                     <input id="staffEmployeeTitle"
                            name="title"
