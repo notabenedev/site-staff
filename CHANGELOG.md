@@ -1,4 +1,13 @@
 ## Versions
+###    v2.0.1-2.0.2 fix employee form
+- добавлено доп поле с именем сотрудника
+- восстнаовление имени сотрудника после отправки формы записи
+- закрытие уведомлений об отпарвке формы после закртия модального окна с формой
+- обновлены шаблоны: site.employees.includes.form, admin.employees.edit
+
+
+            php artisan vendor:publish --provider="Notabenedev\SiteStaff\StaffServiceProvider" --tag=public --force
+
 ###    v2.0.0 base 5
 - new filters: empoloyees-grid-xxl-3, employees-grid-xxl-4
 - обновлен staff-modal.js

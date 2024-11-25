@@ -29,7 +29,10 @@ document.addEventListener('DOMContentLoaded', function(){
     const employeeForm = document.querySelector('#staffEmployeeForm');
     if (employeeForm ){
         employeeForm.addEventListener('reset', event => {
-            modalBodyInput.value =  modalBodyHead.innerHTML
+            setTimeout(function() {
+                // executes after the form has been reset
+                modalBodyInput.value =  modalBodyHead.innerHTML
+            }, 1);
         })
     }
 });
