@@ -31,13 +31,13 @@
                             {!! $employee->comment !!}
                         </div>
                     @endisset
-                    @if(config("site-staff.employeeBntName"))
+                    @if(config("site-staff.employeeBtnName") && $employee->btn_enabled)
                             <a href="#" class="btn btn-outline-primary staff-employee__modal-btn"
                                data-bs-toggle="modal"
                                data-bs-target="#staffEmployeeModal"
                                data-bs-whatever="{{ $employee->title }}"
                             >
-                                {{ config("site-staff.employeeBntName") }}
+                                {{ config("site-staff.employeeBtnName") }}
                             </a>
                         @endif
                 </div>

@@ -23,7 +23,7 @@ return [
     "employeeDescriptionName" => "Описание",
     "employeeCommentName" => "График работы",
     "employeeGalleryName" => "Дипломы и сертификаты",
-    "employeeBntName" => "Записаться на прием",
+    "employeeBtnName" => "Записаться на прием",
     "employeeTitleInputName" => "Специалист",
     "employeeSubmitName" => "Отправить заявку",
     "employeeModalAbout" => "Оставьте заявку и мы Вам перезвоним",

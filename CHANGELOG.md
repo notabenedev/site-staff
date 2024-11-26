@@ -1,4 +1,16 @@
 ## Versions
+###    v2.0.3 add btn_enabled to employee
+- добавлено поле boolean для указания доступности кнопки записи для сотрудника
+- fix конфига: employeeBtnName
+
+Обновление
+- php artisan migrate
+- 
+Проверить переопределение:
+- Шаблонов: admin.employees: create, edit,show;   site.empllyees:teaser, includes.modal; site.departments: index, show;
+- Конфиг employeeBtnName
+- Admin/EmployeeController: store, update
+- 
 ###    v2.0.1-2.0.2 fix employee form
 - добавлено доп поле с именем сотрудника
 - восстнаовление имени сотрудника после отправки формы записи

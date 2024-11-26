@@ -23,7 +23,7 @@ class StaffEmployee extends Model
         "slug",
         "short",
         "description",
-        "comment",
+        "comment"
     ];
 
     protected $metaKey = "employees";
@@ -95,6 +95,19 @@ class StaffEmployee extends Model
         }
         $this->departments()->sync($departmentIds);
         $this->forgetCache();
+    }
+
+    /**
+     * Change btn enabled status
+     *
+     * @param $value
+     * @return void
+     */
+    public  function  updateBtnEnabled($value){
+        if ($this->btn_enabled !== $value){
+            $this->btn_enabled = $value;
+            $this->save();
+        }
     }
 
     /**

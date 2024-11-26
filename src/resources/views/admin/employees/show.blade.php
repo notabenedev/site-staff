@@ -67,6 +67,16 @@
                 {!! $employee->comment !!}
             </div>
         </div>
+            @if (config("site-staff.employeeBtnName"))
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <h5 class="card-title">{{ config("site-staff.employeeBtnName") }}</h5>
+                    </div>
+                    <div class="card-body">
+                        {{ $employee->btn_enabled ? "Доступно": "Не доступно" }}
+                    </div>
+                </div>
+            @endif
         <div class="card mb-2">
             <div class="card-header">
                 <h5 class="card-title">{{ config("site-staff.siteDepartmentName") }}</h5>

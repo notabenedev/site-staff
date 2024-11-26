@@ -46,7 +46,7 @@
                   </div>
               @endif
       @endisset
-      @if (config("site-staff.employeeBntName"))
+      @if (config("site-staff.employeeBtnName"))
           @include("site-staff::site.employees.includes.modal")
       @endif
   </div>

@@ -65,6 +65,7 @@ class StaffEmployeeController extends Controller
     {
         $this->storeValidator($request->all());
         $employee = StaffEmployee::create($request->all());
+        $employee->updateBtnEnabled($request->get("check-btn") ? 1:0);
         $employee->uploadImage($request, "employees/main");
         $employee->updateDepartments($request->all(), true);
         $employee->publishIfPublicDepartment();
@@ -130,6 +131,7 @@ class StaffEmployeeController extends Controller
     {
         $this->updateValidator($request->all(), $employee);
         $employee->update($request->all());
+        $employee->updateBtnEnabled($request->get("check-btn") ? 1:0);
         $employee->uploadImage($request, "employees/main");
         $employee->updateDepartments($request->all(), true);
 

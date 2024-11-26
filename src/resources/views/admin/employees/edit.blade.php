@@ -15,7 +15,7 @@
                     @csrf
                     @method('put')
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="title">{{ config("site-staff.employeeTitleName") }} </label>
                         <input type="text"
                                id="title"
@@ -30,7 +30,7 @@
                         @endif
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="slug">Slug</label>
                         <input type="text"
                                id="slug"
@@ -44,7 +44,7 @@
                         @endif
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="short">{{ config("site-staff.employeeShortName") }}</label>
                         <input type="text"
                                id="short"
@@ -53,7 +53,7 @@
                                class="form-control">
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="description">{{ config("site-staff.employeeDescriptionName") }}</label>
                         <textarea class="form-control tiny"
                                   name="description"
@@ -61,7 +61,7 @@
                                   rows="3">{{ old('description') ? old('description') : $employee->description }}</textarea>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="comment">{{ config("site-staff.employeeCommentName") }}</label>
                         <textarea class="form-control tiny"
                                   name="comment"
@@ -71,7 +71,7 @@
                         </textarea>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         @if($employee->image)
                             <div class="d-inline-block">
                                 @pic([
@@ -104,7 +104,23 @@
                         </div>
                     </div>
 
-                    <div class="form-group mt-3">
+                    @if(config("site-staff.employeeBtnName",false))
+                        <div class="my-3">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input"
+                                       type="checkbox"
+                                       {{ (old('btn_enabled') || $employee->btn_enabled) ? "checked" : "" }}
+                                       value="1"
+                                       id="checkBtn"
+                                       name="check-btn">
+                                <label class="custom-control-label" for="checkBtn">
+                                    Доступно  {{ config("site-staff.employeeBtnName","") }}
+                                </label>
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="my-3">
                         @isset($departments)
                             <label>{{ config("site-staff.siteDepartmentName") }}:</label>
                             @include("site-staff::admin.departments.includes.tree-checkbox", ['departments' => $departments])
