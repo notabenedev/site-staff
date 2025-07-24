@@ -1,9 +1,15 @@
 ## Versions
+###    v2.1.0 add employee site page & can use staff-types package
+    
+    config: site-staff.employeePage = false by default
+    php artisan make:staff --controllers
+
 ###    v2.0.3 add btn_enabled to employee
 - добавлено поле boolean для указания доступности кнопки записи для сотрудника
 - fix конфига: employeeBtnName
 
 Обновление
+
 - php artisan migrate
 - 
 Проверить переопределение:

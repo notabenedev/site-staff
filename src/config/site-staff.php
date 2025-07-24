@@ -16,6 +16,8 @@ return [
     "departmentUrlName" => "department",
     "employeeUrlName" => "employee",
 
+    "employeePage" => false,
+
     "employeeCardBase" => false,
     "employeeGrid" => 3,
     "employeeTitleName" => "ФИО",
@@ -29,5 +31,6 @@ return [
     "employeeModalAbout" => "Оставьте заявку и мы Вам перезвоним",
 
     "departmentFacade" => \Notabenedev\SiteStaff\Helpers\StaffDepartmentActionsManager::class,
+    "employeeFacade" => \Notabenedev\SiteStaff\Helpers\StaffEmployeeActionsManager::class,
 
 ];

@@ -46,7 +46,7 @@
                         </div>
                         @can("update", \App\StaffDepartment::class)
                             <confirm-form :id="'{{ "publish-form-{$item->id}" }}'" text="Это изменит статус отображения на сайте! Невозможно опубликовать дочерний элемент, если не опубликован его родитель. Невозможно снять с публикации родителя, если опубликованы дочерние элементы и страницы.  " confirm-text="Да, изменить!">
-                                <template>
+                                <template v-if="true">
                                     <form action="{{ route('admin.departments.publish', ["department" => $item]) }}"
                                           id="publish-form-{{ $item->id }}"
                                           class="btn-group"
@@ -59,7 +59,7 @@
                         @endcan
                         @can("delete", \App\StaffDepartment::class)
                             <confirm-form :id="'{{ "delete-form-{$item->id}" }}'">
-                                <template>
+                                <template v-if="true">
                                     <form action="{{ route('admin.departments.destroy', ["department" => $item]) }}"
                                           id="delete-form-{{ $item->id }}"
                                           class="btn-group"

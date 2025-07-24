@@ -47,16 +47,7 @@
             <div class="{{ (config("site-staff.employeeCardBase") ? "card-body " : "") }}staff-employee__body">
                 <h3 class="card-title">{{ $employee->title }}</h3>
                 <div class="card-text staff-employee__short">{{ $employee->short }}</div>
-                <div class="card-text staff-employee__departments">
-                    @foreach($employee->departments as $department)
-                        @if ($department->published_at)
-                            <a href="{{ route("site.departments.show", ['department' => $department]) }}"
-                               class="btn btn-outline-secondary staff-employee__btn">
-                                {{ $department->title }}
-                            </a>
-                        @endif
-                    @endforeach
-                </div>
+                @include("site-staff::site.departments.includes.pills",["pills" => $employee->departments])
                 <div class="card-text staff-employee__description">
                     {!! $employee->description !!}
                 </div>

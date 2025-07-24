@@ -67,7 +67,7 @@ class StaffMakeCommand extends BaseConfigModelCommand
      */
     protected $controllers = [
         "Admin" => ["StaffDepartmentController", "StaffEmployeeController"],
-        "Site" => ["StaffDepartmentController"],
+        "Site" => ["StaffDepartmentController", "StaffEmployeeController"],
     ];
 
     /**

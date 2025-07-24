@@ -4,6 +4,7 @@ namespace Notabenedev\SiteStaff\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use PortedCheese\BaseSettings\Traits\ShouldSlug;
 use PortedCheese\SeoIntegration\Traits\ShouldMetas;
 
@@ -24,6 +25,21 @@ class StaffDepartment extends Model
     protected static function booting() {
 
         parent::booting();
+    }
+
+    /**
+     * Тип отдела
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type(){
+        if (class_exists(\App\StaffType::class)) {
+            return $this->belongsTo(\App\StaffType::class,"staff_type_id")->withDefault(null);
+        }
+        else {
+            return new BelongsTo($this->newQuery(),$this, "","","");
+        }
+
     }
 
     /**

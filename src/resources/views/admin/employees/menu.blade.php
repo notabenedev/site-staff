@@ -1,6 +1,12 @@
 @can("viewAny", \App\StaffDepartment::class)
     @if ($theme == "sb-admin")
-        @php($active = strstr($currentRoute, 'admin.employees') !== FALSE)
+        @php($active = strstr($currentRoute, 'admin.employees') !== FALSE ||
+strstr($currentRoute, 'admin.departments') !== FALSE ||
+strstr($currentRoute, 'admin.staff-types') !== FALSE ||
+strstr($currentRoute, 'admin.staff-param-units') !== FALSE ||
+strstr($currentRoute, 'admin.staff-param-names') !== FALSE ||
+strstr($currentRoute, 'admin.staff-offers') !== FALSE
+)
         <li class="nav-item dropdown{{ $active ? ' active' : '' }}">
             <a class="nav-link"
                href="#"
@@ -16,13 +22,14 @@
             <div id="collapse-departments-menu" class="collapse{{ $active ? " show" : "" }}" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a href="{{ route('admin.employees.index') }}"
-                       class="collapse-item{{ strstr($currentRoute, 'admin.employees.') !== FALSE  ? " active" : "" }}">
+                       class="collapse-item{{ strstr($currentRoute, 'admin.employees.') !== FALSE || strstr($currentRoute, 'admin.staff-offers.') !== FALSE  ? " active" : "" }}">
                         <span>{{ config("site-staff.siteEmployeeName") }}</span>
                     </a>
                     <a href="{{ route('admin.departments.index') }}"
                        class="collapse-item{{strstr($currentRoute, 'admin.departments') !== FALSE ? ' active' : '' }}">
                         <span>{{ config("site-staff.siteDepartmentName") }}</span>
                     </a>
+                   @includeIf("staff-types::admin.menu")
                 </div>
             </div>
         </li>

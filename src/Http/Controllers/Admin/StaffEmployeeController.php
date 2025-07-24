@@ -27,6 +27,7 @@ class StaffEmployeeController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      *
      */
+
     public function index(Request $request)
     {
         $query = $request->query;
@@ -105,6 +106,16 @@ class StaffEmployeeController extends Controller
         ]);
     }
 
+    /**
+     * @param StaffEmployee $employee
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
+     */
+    public function params(StaffEmployee $employee)
+    {
+        return view("site-staff::admin.employees.params", [
+            'employee' => $employee,
+        ]);
+    }
     /**
      * Show the form for editing the specified resource.
      *

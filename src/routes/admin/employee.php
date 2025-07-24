@@ -33,6 +33,8 @@ Route::group([
         'prefix' => config("site-staff.employeeUrlName").'/{employee}',
         'as' => 'employees.show.',
     ], function () {
+        Route::get('params', 'StaffEmployeeController@params')
+            ->name('params');
         Route::get('metas', 'StaffEmployeeController@metas')
             ->name('metas');
         Route::get('gallery', 'StaffEmployeeController@gallery')

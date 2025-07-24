@@ -4,7 +4,7 @@
             <div class="custom-control custom-checkbox">
                 <input class="custom-control-input"
                        type="checkbox"
-                       {{ (! count($errors->all()) ) && (isset($employee) && $employee->hasDepartment($department->id)) || old('check-' . $department->id) ? "checked" : "" }}
+                       {{ (! count($errors->all()) ) && (isset($employee) && $employee->hasDepartment($department->id)) || (isset($type) && $type->hasDepartment($department->id)) || old('check-' . $department->id) ? "checked" : "" }}
                        value="{{ $department->id }}"
                        id="check-{{ $department->id }}"
                        name="check-{{ $department->id }}">

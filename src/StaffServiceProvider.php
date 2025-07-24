@@ -61,14 +61,14 @@ class StaffServiceProvider extends ServiceProvider
         }
         if (config("site-staff.staffSiteRoutes")) {
             $this->loadRoutesFrom(__DIR__."/routes/site/department.php");
+            $this->loadRoutesFrom(__DIR__."/routes/site/employee.php");
         }
 
         // Подключение шаблонов.
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'site-staff');
 
         view()->composer([
-            "site-staff::admin.employees.create",
-            "site-staff::admin.employees.edit",
+            "site-staff::admin.departments.includes.tree-checkbox",
 
         ], function ($view){
             $departments = StaffDepartment::getTree();
@@ -121,6 +121,10 @@ class StaffServiceProvider extends ServiceProvider
     {
         $this->app->singleton("staff-department-actions", function () {
             $class = config("site-staff.departmentFacade");
+            return new $class;
+        });
+        $this->app->singleton("staff-employee-actions", function () {
+            $class = config("site-staff.employeeFacade");
             return new $class;
         });
     }

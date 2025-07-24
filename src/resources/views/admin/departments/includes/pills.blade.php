@@ -104,7 +104,7 @@
                                 <i class="fas fa-trash-alt text-danger"></i>
                             </button>
                             <confirm-form :id="'{{ "delete-form-department-{$department->id}" }}'">
-                                <template>
+                                <template v-if="true">
                                     <form action="{{ route('admin.departments.destroy', ['department' => $department]) }}"
                                           id="delete-form-department-{{ $department->id }}"
                                           class="btn-group"

@@ -53,7 +53,7 @@
                             </div>
                             @can("update", \App\StaffEmployee::class)
                                 <confirm-form :id="'{{ "publish-form-{$item->id}" }}'" text="Это изменит статус публикации" confirm-text="Да, изменить!">
-                                    <template>
+                                    <template v-if="true">
                                         <form action="{{ route('admin.employees.publish', ["employee" => $item]) }}"
                                               id="publish-form-{{ $item->id }}"
                                               class="btn-group"
@@ -66,7 +66,7 @@
                             @endcan
                             @can("delete", \App\StaffEmployee::class)
                                 <confirm-form :id="'{{ "delete-form-{$item->id}" }}'">
-                                    <template>
+                                    <template v-if="true">
                                         <form action="{{ route('admin.employees.destroy', ["employee" => $item]) }}"
                                               id="delete-form-{{ $item->id }}"
                                               class="btn-group"

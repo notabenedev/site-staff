@@ -121,10 +121,8 @@
                     @endif
 
                     <div class="my-3">
-                        @isset($departments)
-                            <label>{{ config("site-staff.siteDepartmentName") }}:</label>
-                            @include("site-staff::admin.departments.includes.tree-checkbox", ['departments' => $departments])
-                        @endisset
+                        <label>{{ config("site-staff.siteDepartmentName") }}:</label>
+                        @include("site-staff::admin.departments.includes.tree-checkbox")
                     </div>
 
                     <div class="btn-group mt-2"

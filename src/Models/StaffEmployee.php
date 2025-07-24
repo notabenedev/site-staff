@@ -4,10 +4,12 @@ namespace Notabenedev\SiteStaff\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Notabenedev\SiteStaff\Facades\StaffDepartmentActions;
+use Notabenedev\StaffTypes\Traits\ShouldParams;
 use PortedCheese\BaseSettings\Traits\ShouldGallery;
 use PortedCheese\BaseSettings\Traits\ShouldImage;
 use PortedCheese\BaseSettings\Traits\ShouldSlug;
@@ -16,7 +18,7 @@ use PortedCheese\SeoIntegration\Traits\ShouldMetas;
 class StaffEmployee extends Model
 {
     use HasFactory;
-    use ShouldMetas, ShouldSlug, ShouldImage, ShouldGallery;
+    use ShouldMetas, ShouldSlug, ShouldImage, ShouldGallery, ShouldParams;
 
     protected $fillable = [
         "title",
@@ -49,6 +51,9 @@ class StaffEmployee extends Model
 
         static::deleting(function (\App\StaffEmployee $model) {
             $model->departments()->sync([]);
+            foreach ($model->offers as $offer){
+                $offer->delete();
+            }
         });
         static::deleted(function (\App\StaffEmployee $model) {
             // Забыть кэш.
@@ -65,6 +70,21 @@ class StaffEmployee extends Model
     {
         return $this->belongsToMany(\App\StaffDepartment::class)
             ->withTimestamps();
+    }
+
+    /**
+     * Предложения сотрудника
+     *
+     *@return HasMany
+     */
+    public function offers(){
+        if (class_exists(\App\StaffOffer::class)) {
+            return $this->hasMany(\App\StaffOffer::class);
+        }
+        else {
+            return new HasMany($this->newQuery(), $this, "", "");
+        }
+
     }
 
     /**

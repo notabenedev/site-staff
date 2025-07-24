@@ -49,6 +49,7 @@
                                 </a>
                             </li>
                         @endcan
+                        @includeIf("staff-types::admin.staff-offers.includes.employee-pill")
                     @endcan
 
                     @can("delete", \App\StaffEmployee::class)
@@ -58,7 +59,7 @@
                                 <i class="fas fa-trash-alt text-danger"></i>
                             </button>
                             <confirm-form :id="'{{ "delete-form-employee-{$employee->id}" }}'">
-                                <template>
+                                <template v-if="true">
                                     <form action="{{ route('admin.employees.destroy', ['employee' => $employee]) }}"
                                           id="delete-form-employee-{{ $employee->id }}"
                                           class="btn-group"
