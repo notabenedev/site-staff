@@ -27,6 +27,7 @@
               @isset($employee->offers)
                   @includeIf("staff-types::site.staff-offers.includes.items",["items" => $employee->offers])
               @endisset
+
           </div>
           <div class="col-12 col-md-4 col-lg-3">
               <div class="sticky-top staff-employee__sticky">
@@ -35,9 +36,9 @@
                       'image' => $employee->image,
                       'template' => "employees",
                       'grid' => [
-                      "employees-grid-xxl-".$grid => 1400,
-                      "employees-grid-xl-".$grid => 1200,
-                      "employees-grid-lg-".$grid => 992,
+                      "employees-grid-xxl-3" => 1400,
+                      "employees-grid-xl-3" => 1200,
+                      "employees-grid-lg-3" => 992,
                       'employees-grid-md-4' => 768,
                       ],
                       'imgClass' => 'img-fluid rounded',
@@ -59,15 +60,7 @@
                               {!! $employee->comment !!}
                           </div>
                       @endisset
-                      @if(config("site-staff.employeeBtnName") && $employee->btn_enabled)
-                          <a href="#" class="btn btn-outline-primary staff-employee__modal-btn"
-                             data-bs-toggle="modal"
-                             data-bs-target="#staffEmployeeModal"
-                             data-bs-whatever="{{ $employee->title }}"
-                          >
-                              {{ config("site-staff.employeeBtnName") }}
-                          </a>
-                      @endif
+
                   </div>
               </div>
           </div>

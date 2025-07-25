@@ -5,6 +5,8 @@ namespace Notabenedev\SiteStaff\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use PortedCheese\BaseSettings\Traits\ShouldSlug;
 use PortedCheese\SeoIntegration\Traits\ShouldMetas;
 
@@ -53,6 +55,19 @@ class StaffDepartment extends Model
             ->withTimestamps();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|HasMany
+     */
+    public function offers()
+    {
+        if (class_exists(\App\StaffOffer::class)) {
+            return $this->belongsToMany(\App\StaffOffer::class)
+                ->withTimestamps();
+        }
+        else {
+            return new BelongsToMany($this->newQuery(), $this, "", "", "","" ,"");
+        }
+    }
     /**
      * Родительская группа.
      *

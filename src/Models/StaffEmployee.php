@@ -79,7 +79,7 @@ class StaffEmployee extends Model
      */
     public function offers(){
         if (class_exists(\App\StaffOffer::class)) {
-            return $this->hasMany(\App\StaffOffer::class);
+            return $this->hasMany(\App\StaffOffer::class)->orderBy('priority');
         }
         else {
             return new HasMany($this->newQuery(), $this, "", "");
