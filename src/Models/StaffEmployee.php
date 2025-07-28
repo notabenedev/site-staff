@@ -18,7 +18,8 @@ use PortedCheese\SeoIntegration\Traits\ShouldMetas;
 class StaffEmployee extends Model
 {
     use HasFactory;
-    use ShouldMetas, ShouldSlug, ShouldImage, ShouldGallery, ShouldParams;
+    use ShouldMetas, ShouldSlug, ShouldImage, ShouldGallery;
+    // use ShouldParams;
 
     protected $fillable = [
         "title",
