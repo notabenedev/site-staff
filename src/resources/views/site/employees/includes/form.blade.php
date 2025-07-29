@@ -3,7 +3,7 @@
     <div class="form-row">
         @if (config("site-staff.employeeTitleInputName"))
             <div class="col-12">
-                <div class="form-group">
+                <div class="mb-3">
                     <span class="d-none" id="staffEmployeeModalHeader"></span>
                     <label for="staffEmployeeTitle">{{ config("site-staff.employeeTitleInputName") }} <span class="text-danger">*</span></label>
                     <input id="staffEmployeeTitle"
@@ -19,7 +19,7 @@
             </div>
         @endif
         <div class="col-12">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="staffEmployeeName">Имя <span class="text-danger">*</span></label>
                 <input type="text"
                        id="staffEmployeeName"
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="col-12">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="staffEmployeePhone">Номер телефона <span class="text-danger">*</span></label>
                 <input type="text"
                        id="staffEmployeePhone"
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="col-12">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="staffEmployeeMessage">Комментарий</label>
                 <textarea class="form-control" name="message" id="staffEmployeeMessage" rows="3">
                     {{ old('message') }}
@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="col-12">
-            <div class="form-group">
+            <div class="mb-3">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox"
                            class="custom-control-input"
@@ -55,7 +55,9 @@
                            checked
                            required
                            name="privacy_policy">
-                    <label class="custom-control-label" for="staffEmployeePrivacy_policy">Согласие с <a href="{{ route("policy") }}" target="_blank" > "Политикой конфиденциальности"</a></label>
+                    <label class="custom-control-label" for="staffEmployeePrivacy_policy">
+                        <a href="#agreementModal" data-bs-toggle="modal" data-bs-target="#agreementModal">Согласие на обработку персональных данных</a> и принимаю условия <a href="{{ route("policy") }}" target="_blank">Политики по обработке персональных данных</a>
+                    </label>
                 </div>
             </div>
         </div>
