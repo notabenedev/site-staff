@@ -3,19 +3,22 @@ document.addEventListener('DOMContentLoaded', function(){
     const employeeModal = document.getElementById('staffEmployeeModal')
     const modalBodyInput = document.querySelector('#staffEmployeeTitle')
     const modalBodyHead = document.querySelector('#staffEmployeeModalHeader')
-    if (employeeModal) {
+    if (employeeModal && modalBodyInput) {
         employeeModal.addEventListener('show.bs.modal', event => {
 
             // Button that triggered the modal
             const button = event.relatedTarget
             // Extract info from data-bs-* attributes
             const recipient = button.getAttribute('data-bs-whatever')
-            // If necessary, you could initiate an Ajax request here
-            // and then do the updating in a callback.
-
             // Update the modal's content.
             modalBodyInput.value = recipient
             modalBodyHead.innerHTML = recipient
+
+            const address = button.getAttribute('data-bs-whatever-address')
+            const modalBodyInputAddress = document.querySelector('#staffEmployeeAddress')
+            if (modalBodyInputAddress && address) {
+                modalBodyInputAddress.value = address
+            }
 
             // close form alerts
             let alerts = this.querySelectorAll('.alert')

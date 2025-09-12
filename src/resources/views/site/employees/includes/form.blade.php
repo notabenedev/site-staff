@@ -17,6 +17,7 @@
                            class="form-control">
                 </div>
             </div>
+            @includeIf("staff-types::site.staff-offers.includes.input-address")
         @endif
         <div class="col-12">
             <div class="mb-3">
