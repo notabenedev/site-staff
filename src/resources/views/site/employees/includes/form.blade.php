@@ -49,17 +49,7 @@
         </div>
         <div class="col-12">
             <div class="mb-3">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox"
-                           class="custom-control-input"
-                           id="staffEmployeePrivacy_policy"
-                           checked
-                           required
-                           name="privacy_policy">
-                    <label class="custom-control-label" for="staffEmployeePrivacy_policy">
-                        <a href="#agreementModal" data-bs-toggle="modal" data-bs-target="#agreementModal">Согласие на обработку персональных данных</a> и принимаю условия <a href="{{ route("policy") }}" target="_blank">Политики по обработке персональных данных</a>
-                    </label>
-                </div>
+                @includeIf("ajax-forms::site.includes.policy-input",["postfix" => "staffEmployee" ])
             </div>
         </div>
         <div class="col-12">
