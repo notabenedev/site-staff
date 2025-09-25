@@ -1,5 +1,14 @@
 ## Versions
-###    v2.1.0 add employee site page & can use staff-types package
+###    v2.1.5 address to form (uses  staff-types package)
+
+Обновление
+
+- если используется пакет staff-types, в проетке добавить новое поле address к форме
+
+
+    php artisan vendor:publish --provider="Notabenedev\SiteStaff\StaffServiceProvider" --tag=public --force
+
+###    v2.1.0-2.1.4 add employee site page & can use staff-types package
     
     config: site-staff.employeePage = false by default
     php artisan make:staff --controllers
