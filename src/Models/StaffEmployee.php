@@ -220,7 +220,7 @@ class StaffEmployee extends Model
         }
 
         Cache::forget("staff-employees-getAllPublished");
-
+        Cache::forget("staff-param-available-dataApp\StaffEmployee:$this->id");
     }
 
     public static function getAllPublished()
