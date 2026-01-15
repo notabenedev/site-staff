@@ -108,7 +108,7 @@ class StaffEmployee extends Model
     {
         $departmentIds = [];
         foreach ($userInput as $key => $value) {
-            if (strstr($key, "check-") == false) {
+            if (!str_contains($key, "check-") || str_contains($key,"check-btn")) {
                 continue;
             }
             $departmentIds[] = $value;

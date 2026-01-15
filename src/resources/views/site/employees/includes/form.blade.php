@@ -49,7 +49,7 @@
         </div>
         <div class="col-12">
             <div class="mb-3">
-                @includeIf("ajax-forms::site.includes.policy-input",["postfix" => "staffEmployee" ])
+                @includeIf("ajax-forms::site.includes.policy-input",["postfix" => "staffEmployee"])
             </div>
         </div>
         <div class="col-12">
